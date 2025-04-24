@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <title>
+    SEBUL - Gestion des Factures
+  </title>
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
+  <!-- Nucleo Icons -->
+  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <!-- Material Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="../assets/css/material-dashboard.css?v=3.2.0" rel="stylesheet" />
+  <style>
+    /* SEBUL Color Theme - Based on logo colors */
+    :root {
+      --sebul-red: #E63E3A;
+      --sebul-blue: #1B4695;
+      --sebul-light-blue: #3266CC;
+    }
+    
+    .bg-gradient-primary {
+      background-image: linear-gradient(195deg, var(--sebul-red), #cc2924) !important;
+    }
+    
+    .bg-gradient-blue {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .navbar-vertical.bg-white .navbar-nav .nav-link.active {
+      background-color: var(--sebul-red);
+      color: white;
+    }
+    
+    .bg-gradient-dark {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .btn.bg-gradient-dark {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .text-info {
+      color: var(--sebul-blue) !important;
+    }
+    
+    .bg-gradient-info {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .text-success {
+      color: var(--sebul-red) !important;
+    }
+    
+    .bg-gradient-success {
+      background-image: linear-gradient(195deg, var(--sebul-red), #cc2924) !important;
+    }
+    
+    .text-primary {
+      color: var(--sebul-red) !important;
+    }
+    
+    .btn-primary, .btn.bg-gradient-primary {
+      background-color: var(--sebul-red);
+      background-image: linear-gradient(195deg, var(--sebul-red), #cc2924);
+    }
+    
+    .btn-outline-primary {
+      color: var(--sebul-red);
+      border-color: var(--sebul-red);
+    }
+    
+    .btn-outline-primary:hover {
+      background-color: var(--sebul-red);
+      border-color: var(--sebul-red);
+    }
+    
+    .progress-bar.bg-gradient-info {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .bg-gradient-warning {
+      background-image: linear-gradient(195deg, var(--sebul-red), #cc2924) !important;
+    }
+    
+    .active-nav-link {
+      background-color: var(--sebul-red) !important;
+      color: white !important;
+      box-shadow: 0 4px 6px -1px rgba(230, 62, 58, 0.15), 0 2px 4px -1px rgba(230, 62, 58, 0.06);
+    }
+
+    /* Badges couleurs pour les statuts de facture */
+    .badge-paid {
+      background-color: #82d616;
+      color: white;
+    }
+    
+    .badge-unpaid {
+      background-color: #ea0606;
+      color: white;
+    }
+    
+    .badge-partial {
+      background-color: #fbcf33;
+      color: #344767;
+    }
+    
+    .badge-overdue {
+      background-color: #e91e63;
+      color: white;
+    }
+    
+    .badge-draft {
+      background-color: #627594;
+      color: white;
+    }
+    
+    .badge-sent {
+      background-color: #3A82EF;
+      color: white;
+    }
+
+    /* Styles additionnels pour la page factures */
+    .form-check-input:checked {
+      background-color: var(--sebul-red);
+      border-color: var(--sebul-red);
+    }
+    
+    .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+      background-color: var(--sebul-red);
+    }
+
+    /* Style pour le bouton d'ajout de facture */
+    .btn-add-invoice {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(230, 62, 58, 0.4);
+      z-index: 9;
+    }
+
+    .btn-add-invoice i {
+      font-size: 24px;
+    }
+    
+    /* Progress bar de paiement */
+    .payment-progress {
+      height: 8px;
+      width: 100%;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body class="g-sidenav-show bg-gray-100">
+    <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2 bg-white my-2" id="sidenav-main">
+        <div class="sidenav-header">
+          <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+          <img src="../assets/img/logo (1).png" height="105px" hspace="20">
+        </div>
+        <hr class="horizontal dark mt-0 mb-2">
+        <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="../pages/dashboard.html">
+                <i class="material-symbols-rounded opacity-5">dashboard</i>
+                <span class="nav-link-text ms-1">Dashboard</span>
+              </a>
+            </li>
+      
+            <!-- 1. Gestion commerciale -->
+            <li class="nav-item">
+              <a data-bs-toggle="collapse" href="#gestionCommercialePages" class="nav-link text-dark" aria-controls="gestionCommercialePages" role="button" aria-expanded="true">
+                <i class="material-symbols-rounded opacity-5">store</i>
+                <span class="nav-link-text ms-1">Gestion commerciale</span>
+                <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+              </a>
+              <div class="collapse show" id="gestionCommercialePages">
+                <ul class="nav ms-4">
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/clients.html">
+                      <span class="nav-link-text ms-1">Clients</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/devis.html">
+                      <span class="nav-link-text ms-1">Devis</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/contrats.html">
+                      <span class="nav-link-text ms-1">Contrats</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active-nav-link" href="../pages/factures.html">
+                      <span class="nav-link-text ms-1">Factures</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/bons-livraison.html">
+                      <span class="nav-link-text ms-1">Bons de Livraison (BL)</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+      
+            <!-- 2. Parc et Achats -->
+            <li class="nav-item">
+              <a data-bs-toggle="collapse" href="#parcAchatsPages" class="nav-link text-dark" aria-controls="parcAchatsPages" role="button" aria-expanded="false">
+                <i class="material-symbols-rounded opacity-5">build</i>
+                <span class="nav-link-text ms-1">Parc & Achats</span>
+                <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+              </a>
+              <div class="collapse" id="parcAchatsPages">
+                <ul class="nav ms-4">
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/machines.html">
+                      <span class="nav-link-text ms-1">Machines/Engins</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/fournisseurs.html">
+                      <span class="nav-link-text ms-1">Fournisseurs</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/commandes.html">
+                      <span class="nav-link-text ms-1">Commandes fournisseurs</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/bons-commande.html">
+                      <span class="nav-link-text ms-1">Bons de commande</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+      
+            <!-- 3. Transport et Services -->
+            <li class="nav-item">
+              <a data-bs-toggle="collapse" href="#transportServicesPages" class="nav-link text-dark" aria-controls="transportServicesPages" role="button" aria-expanded="false">
+                <i class="material-symbols-rounded opacity-5">local_shipping</i>
+                <span class="nav-link-text ms-1">Transport & Services</span>
+                <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+              </a>
+              <div class="collapse" id="transportServicesPages">
+                <ul class="nav ms-4">
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/missions.html">
+                      <span class="nav-link-text ms-1">Missions de transport</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/factures-transitaire.html">
+                      <span class="nav-link-text ms-1">Factures transitaire</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/produits-services.html">
+                      <span class="nav-link-text ms-1">Produits/Services</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+      
+            <!-- 4. Finances -->
+            <li class="nav-item">
+              <a data-bs-toggle="collapse" href="#financesPages" class="nav-link text-dark" aria-controls="financesPages" role="button" aria-expanded="false">
+                <i class="material-symbols-rounded opacity-5">account_balance</i>
+                <span class="nav-link-text ms-1">Finances</span>
+                <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+              </a>
+              <div class="collapse" id="financesPages">
+                <ul class="nav ms-4">
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/charges.html">
+                      <span class="nav-link-text ms-1">Charges</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/paiements.html">
+                      <span class="nav-link-text ms-1">Paiements</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/rapports.html">
+                      <span class="nav-link-text ms-1">Rapports & Statistiques</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+      
+            <!-- 5. Administration -->
+            <li class="nav-item">
+              <a data-bs-toggle="collapse" href="#administrationPages" class="nav-link text-dark" aria-controls="administrationPages" role="button" aria-expanded="false">
+                <i class="material-symbols-rounded opacity-5">admin_panel_settings</i>
+                <span class="nav-link-text ms-1">Administration</span>
+                <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+              </a>
+              <div class="collapse" id="administrationPages">
+                <ul class="nav ms-4">
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/utilisateurs.html">
+                      <span class="nav-link-text ms-1">Utilisateurs & rôles</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/parametres.html">
+                      <span class="nav-link-text ms-1">Paramètres</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/taxes.html">
+                      <span class="nav-link-text ms-1">TVA & taxes</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+      
+            <li class="nav-item mt-3">
+              <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-5">Account pages</h6>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="../pages/profile.html">
+                <i class="material-symbols-rounded opacity-5">person</i>
+                <span class="nav-link-text ms-1">Profile</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="../pages/sign-in.html">
+                <i class="material-symbols-rounded opacity-5">login</i>
+                <span class="nav-link-text ms-1">Sign In</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="../pages/sign-up.html">
+                <i class="material-symbols-rounded opacity-5">assignment</i>
+                <span class="nav-link-text ms-1">Sign Up</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="sidenav-footer position-absolute w-100 bottom-0">
+          <div class="mx-3">
+            
+          </div>
+        </div>
+      </aside>
+  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
+    <!-- Navbar -->
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-3 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
+      <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Gestion commerciale</a></li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Factures</li>
+          </ol>
+        </nav>
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+            <div class="input-group input-group-outline">
+              <label class="form-label">Rechercher...</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+          <ul class="navbar-nav d-flex align-items-center justify-content-end">
+            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                <div class="sidenav-toggler-inner">
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                </div>
+              </a>
+            </li>
+            <li class="nav-item px-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0">
+                <i class="material-symbols-rounded fixed-plugin-button-nav">settings</i>
+              </a>
+            </li>
+            <li class="nav-item dropdown pe-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="material-symbols-rounded">notifications</i>
+                <span class="position-absolute top-5 start-100 translate-middle badge rounded-pill bg-danger border border-white small py-1 px-2">
+                  <span class="small">4</span>
+                  <span class="visually-hidden">notifications non lues</span>
+                </span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                <li class="mb-2">
+                  <a class="dropdown-item border-radius-md" href="javascript:;">
+                    <div class="d-flex py-1">
+                      <div class="avatar avatar-sm bg-gradient-primary me-3 my-auto">
+                        <i class="material-symbols-rounded opacity-10">receipt_long</i>
+                      </div>
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="text-sm font-weight-normal mb-1">
+                          <span class="font-weight-bold">Facture #F-3958</span> en retard de paiement
+                        </h6>
+                        <p class="text-xs text-secondary mb-0">
+                          <i class="fa fa-clock me-1"></i>
+                          Il y a 2 jours
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <li class="mb-2">
+                  <a class="dropdown-item border-radius-md" href="javascript:;">
+                    <div class="d-flex py-1">
+                      <div class="avatar avatar-sm bg-gradient-success me-3 my-auto">
+                        <i class="material-symbols-rounded opacity-10">paid</i>
+                      </div>
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="text-sm font-weight-normal mb-1">
+                          <span class="font-weight-bold">Paiement reçu</span> pour la facture #F-3945
+                        </h6>
+                        <p class="text-xs text-secondary mb-0">
+                          <i class="fa fa-clock me-1"></i>
+                          Il y a 3 jours
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item border-radius-md" href="javascript:;">
+                    <div class="d-flex py-1">
+                      <div class="avatar avatar-sm bg-gradient-warning me-3 my-auto">
+                        <i class="material-symbols-rounded opacity-10">warning</i>
+                      </div>
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="text-sm font-weight-normal mb-1">
+                          <span class="font-weight-bold">3 factures</span> à échéance cette semaine
+                        </h6>
+                        <p class="text-xs text-secondary mb-0">
+                          <i class="fa fa-clock me-1"></i>
+                          Il y a 4 jours
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item d-flex align-items-center">
+              <a href="../pages/profile.html" class="nav-link text-body font-weight-bold px-0">
+                <i class="material-symbols-rounded me-1">account_circle</i>
+                <span class="d-sm-inline d-none">John Doe</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- End Navbar -->
+    <div class="container-fluid py-2">
+      <!-- Statistics Cards -->
+      <div class="row mb-4">
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-header p-3 pt-2">
+              <div class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl mt-n4 position-absolute">
+                <i class="material-symbols-rounded opacity-10">receipt</i>
+              </div>
+              <div class="text-end pt-1">
+                <p class="text-sm mb-0 text-capitalize">Total factures</p>
+                <h4 class="mb-0">87</h4>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-3">
+              <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+12% </span>que le mois dernier</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-header p-3 pt-2">
+              <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+                <i class="material-symbols-rounded opacity-10">paid</i>
+              </div>
+              <div class="text-end pt-1">
+                <p class="text-sm mb-0 text-capitalize">Factures payées</p>
+                <h4 class="mb-0">54</h4>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-3">
+              <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+8% </span>que le mois dernier</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-header p-3 pt-2">
+              <div class="icon icon-lg icon-shape bg-gradient-warning shadow-warning text-center border-radius-xl mt-n4 position-absolute">
+                <i class="material-symbols-rounded opacity-10">payments</i>
+              </div>
+              <div class="text-end pt-1">
+                <p class="text-sm mb-0 text-capitalize">En attente</p>
+                <h4 class="mb-0">25</h4>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-3">
+              <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">+3% </span>que le mois dernier</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+          <div class="card">
+            <div class="card-header p-3 pt-2">
+              <div class="icon icon-lg icon-shape bg-gradient-danger shadow-danger text-center border-radius-xl mt-n4 position-absolute">
+                <i class="material-symbols-rounded opacity-10">warning</i>
+              </div>
+              <div class="text-end pt-1">
+                <p class="text-sm mb-0 text-capitalize">En retard</p>
+                <h4 class="mb-0">8</h4>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-3">
+              <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">+2% </span>que le mois dernier</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header p-3">
+              <div class="row">
+                <div class="col-md-6">
+                  <h5 class="mb-0">Gestion des Factures</h5>
+                  <p class="text-sm mb-0">
+                    Gérez toutes vos factures clients et suivez leur statut de paiement
+                  </p>
+                </div>
+                <div class="col-md-6 d-flex justify-content-end align-items-center">
+                  <ul class="nav nav-pills nav-fill p-1" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#tab-all" role="tab" aria-selected="true">
+                        <span class="material-symbols-rounded text-sm me-1">dashboard</span> Toutes
+                        <span class="ms-1 badge bg-gradient-dark">87</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#tab-paid" role="tab" aria-selected="false">
+                        <span class="material-symbols-rounded text-sm me-1">check_circle</span> Payées
+                        <span class="ms-1 badge bg-gradient-success">54</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#tab-unpaid" role="tab" aria-selected="false">
+                        <span class="material-symbols-rounded text-sm me-1">pending</span> En attente
+                        <span class="ms-1 badge bg-gradient-warning">25</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#tab-overdue" role="tab" aria-selected="false">
+                        <span class="material-symbols-rounded text-sm me-1">alarm</span> En retard
+                        <span class="ms-1 badge bg-gradient-danger">8</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="card-body px-0 pb-0">
+              <div class="table-responsive">
+                <div class="tab-content">
+                  <div class="tab-pane fade show active" id="tab-all">
+                    <table class="table align-items-center mb-0">
+                      <thead>
+                        <tr>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">N° Facture</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Client</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Date émission</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Date échéance</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Montant</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Statut</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Paiement</th>
+                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- Facture 1 -->
+                        <tr>
+                          <td>
+                            <div class="d-flex px-3 py-1">
+                              <h6 class="mb-0 text-sm">#F-4021</h6>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="d-flex px-2 py-1">
+                              <div class="d-flex flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm">TransCargo SARL</h6>
+                                <p class="text-xs text-secondary mb-0">contact@transcargo.ma</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0">15/04/2025</p>
+                          </td>
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0">15/05/2025</p>
+                          </td>
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0">28 500,00 DH</p>
+                          </td>
+                          <td>
+                            <span class="badge badge-sent">Envoyée</span>
+                          </td>
+                          <td>
+                            <div class="progress-wrapper w-75 mx-auto">
+                              <div class="progress-info">
+                                <div class="progress-percentage">
+                                  <span class="text-xs font-weight-bold">0%</span>
+                                </div>
+                              </div>
+                              <div class="progress payment-progress">
+                                <div class="progress-bar bg-gradient-info w-0" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="align-middle text-center">
+                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Voir facture">
+                              <i class="material-symbols-rounded text-sm me-2">visibility</i>
+                            </a>
+                            <a href="javascript:;" class="text-primary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Éditer facture">
+                              <i class="material-symbols-rounded text-sm me-2">edit</i>
+                            </a>
+                            <a href="javascript:;" class="text-info font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Envoyer facture">
+                              <i class="material-symbols-rounded text-sm me-2">mail</i>
+                            </a>
+                            <a href="javascript:;" class="text-success font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Enregistrer paiement">
+                              <i class="material-symbols-rounded text-sm">payments</i>
+                            </a>
+                          </td>
+                        </tr>
+                        
+                        <!-- Facture 2 -->
+                        <tr>
+                          <td>
+                            <div class="d-flex px-3 py-1">
+                              <h6 class="mb-0 text-sm">#F-4020</h6>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="d-flex px-2 py-1">
+                              <div class="d-flex flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm">Atlas Distributions</h6>
+                                <p class="text-xs text-secondary mb-0">finance@atlas-dist.com</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0">12/04/2025</p>
+                          </td>
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0">12/05/2025</p>
+                          </td>
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0">15 750,00 DH</p>
+                          </td>
+                          <td>
+                            <span class="badge badge-partial">Partiellement payée</span>
+                          </td>
+                          <td>
+                            <div class="progress-wrapper w-75 mx-auto">
+                              <div class="progress-info">
+                                <div class="progress-percentage">
+                                  <span class="text-xs font-weight-bold">60%</span>
+                                </div>
+                              </div>
+                              <div class="progress payment-progress">
+                                <div class="progress-bar bg-gradient-info w-60" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="align-middle text-center">
+                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Voir facture">
+                              <i class="material-symbols-rounded text-sm me-2">visibility</i>
+                            </a>
+                            <a href="javascript:;" class="text-primary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Éditer facture">
+                              <i class="material-symbols-rounded text-sm me-2">edit</i>
+                            </a>
+                            <a href="javascript:;" class="text-info font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Envoyer facture">
+                              <i class="material-symbols-rounded text-sm me-2">mail</i>
+                            </a>
+                            <a href="javascript:;" class="text-success font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Enregistrer paiement">
+                              <i class="material-symbols-rounded text-sm">payments</i>
+                            </a>
+                          </td>
+                        </tr>
+                        
+                        <!-- Facture 3 -->
+                        <tr>
+                          <td>
+                            <div class="d-flex px-3 py-1">
+                              <h6 class="mb-0 text-sm">#F-4019</h6>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="d-flex px-2 py-1">
+                              <div class="d-flex flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm">MarocTrans SA</h6>
+                                <p class="text-xs text-secondary mb-0">comptabilite@maroctrans.ma</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0">05/04/2025</p>
+                          </td>
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0">05/05/2025</p>
+                          </td>
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0">42 300,00 DH</p>
+                          </td>
+                          <td>
+                            <span class="badge badge-paid">Payée</span>
+                          </td>
+                          <td>
+                            <div class="progress-wrapper w-75 mx-auto">
+                              <div class="progress-info">
+                                <div class="progress-percentage">
+                                  <span class="text-xs font-weight-bold">100%</span>
+                                </div>
+                              </div>
+                              <div class="progress payment-progress">
+                                <div class="progress-bar bg-gradient-info w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="align-middle text-center">
+                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Voir facture">
+                              <i class="material-symbols-rounded text-sm me-2">visibility</i>
+                            </a>
+                            <a href="javascript:;" class="text-primary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Éditer facture">
+                              <i class="material-symbols-rounded text-sm me-2">edit</i>
+                            </a>
+                            <a href="javascript:;" class="text-info font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Envoyer facture">
+                              <i class="material-symbols-rounded text-sm me-2">mail</i>
+                            </a>
+                          </td>
+                        </tr>
+                        
+                        <!-- Facture 4 -->
+                        <tr>
+                          <td>
+                            <div class="d-flex px-3 py-1">
+                              <h6 class="mb-0 text-sm">#F-4018</h6>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="d-flex px-2 py-1">
+                              <div class="d-flex flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm">Logimar Services</h6>
+                                <p class="text-xs text-secondary mb-0">finance@logimar.co.ma</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0">01/04/2025</p>
+                          </td>
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0">01/05/2025</p>
+                          </td>
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0">35 800,00 DH</p>
+                          </td>
+                          <td>
+                            <span class="badge badge-unpaid">Non payée</span>
+                          </td>
+                          <td>
+                            <div class="progress-wrapper w-75 mx-auto">
+                              <div class="progress-info">
+                                <div class="progress-percentage">
+                                  <span class="text-xs font-weight-bold">0%</span>
+                                </div>
+                              </div>
+                              <div class="progress payment-progress">
+                                <div class="progress-bar bg-gradient-info w-0" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="align-middle text-center">
+                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Voir facture">
+                              <i class="material-symbols-rounded text-sm me-2">visibility</i>
+                            </a>
+                            <a href="javascript:;" class="text-primary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Éditer facture">
+                              <i class="material-symbols-rounded text-sm me-2">edit</i>
+                            </a>
+                            <a href="javascript:;" class="text-info font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Envoyer facture">
+                              <i class="material-symbols-rounded text-sm me-2">mail</i>
+                            </a>
+                            <a href="javascript:;" class="text-success font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Enregistrer paiement">
+                              <i class="material-symbols-rounded text-sm">payments</i>
+                            </a>
+                          </td>
+                        </tr>
+                        
+                        <!-- Facture 5 -->
+                        <tr>
+                          <td>
+                            <div class="d-flex px-3 py-1">
+                              <h6 class="mb-0 text-sm">#F-4017</h6>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="d-flex px-2 py-1">
+                              <div class="d-flex flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm">GlobalShip Maroc</h6>
+                                <p class="text-xs text-secondary mb-0">admin@globalship.ma</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0">28/03/2025</p>
+                          </td>
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0">12/04/2025</p>
+                          </td>
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0">19 250,00 DH</p>
+                          </td>
+                          <td>
+                            <span class="badge badge-overdue">En retard</span>
+                          </td>
+                          <td>
+                            <div class="progress-wrapper w-75 mx-auto">
+                              <div class="progress-info">
+                                <div class="progress-percentage">
+                                  <span class="text-xs font-weight-bold">0%</span>
+                                </div>
+                              </div>
+                              <div class="progress payment-progress">
+                                <div class="progress-bar bg-gradient-info w-0" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="align-middle text-center">
+                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Voir facture">
+                              <i class="material-symbols-rounded text-sm me-2">visibility</i>
+                            </a>
+                            <a href="javascript:;" class="text-primary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Éditer facture">
+                              <i class="material-symbols-rounded text-sm me-2">edit</i>
+                            </a>
+                            <a href="javascript:;" class="text-info font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Envoyer facture">
+                              <i class="material-symbols-rounded text-sm me-2">mail</i>
+                            </a>
+                            <a href="javascript:;" class="text-warning font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Envoyer rappel">
+                              <i class="material-symbols-rounded text-sm me-2">notification_important</i>
+                            </a>
+                            <a href="javascript:;" class="text-success font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Enregistrer paiement">
+                              <i class="material-symbols-rounded text-sm">payments</i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  
+                  <!-- Contenu pour les autres onglets (sera similaire mais filtré) -->
+                  <div class="tab-pane fade" id="tab-paid">
+                    <!-- Contenu pour les factures payées -->
+                    <!-- Structure similaire au tableau ci-dessus -->
+                  </div>
+                  
+                  <div class="tab-pane fade" id="tab-unpaid">
+                    <!-- Contenu pour les factures en attente -->
+                    <!-- Structure similaire au tableau ci-dessus -->
+                  </div>
+                  
+                  <div class="tab-pane fade" id="tab-overdue">
+                    <!-- Contenu pour les factures en retard -->
+                    <!-- Structure similaire au tableau ci-dessus -->
+                  </div>
+                </div>
+              </div>
+              <!-- Pagination -->
+              <div class="d-flex justify-content-center mt-3">
+                <ul class="pagination pagination-primary">
+                  <li class="page-item">
+                    <a class="page-link" href="javascript:;" aria-label="Previous">
+                      <span aria-hidden="true"><i class="material-symbols-rounded opacity-10">chevron_left</i></span>
+                    </a>
+                  </li>
+                  <li class="page-item active">
+                    <a class="page-link" href="javascript:;">1</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="javascript:;">2</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="javascript:;">3</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="javascript:;" aria-label="Next">
+                      <span aria-hidden="true"><i class="material-symbols-rounded opacity-10">chevron_right</i></span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Bouton flottant pour ajouter une facture -->
+      <a href="javascript:;" class="btn bg-gradient-primary btn-add-invoice shadow" data-bs-toggle="modal" data-bs-target="#addInvoiceModal">
+        <i class="material-symbols-rounded">add</i>
+      </a>
+
+      <!-- Modal pour ajouter une nouvelle facture -->
+      <div class="modal fade" id="addInvoiceModal" tabindex="-1" role="dialog" aria-labelledby="addInvoiceModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addInvoiceModalLabel">Créer une nouvelle facture</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="addInvoiceForm">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="input-group input-group-static mb-4">
+                      <label>Client</label>
+                      <select class="form-control" id="clientSelect" required>
+                        <option value="" selected disabled>Sélectionner un client</option>
+                        <option value="1">TransCargo SARL</option>
+                        <option value="2">Atlas Distributions</option>
+                        <option value="3">MarocTrans SA</option>
+                        <option value="4">Logimar Services</option>
+                        <option value="5">GlobalShip Maroc</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-group input-group-static mb-4">
+                      <label>Numéro de facture</label>
+                      <input type="text" class="form-control" placeholder="Auto-généré" disabled>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="input-group input-group-static mb-4">
+                      <label>Date d'émission</label>
+                      <input type="date" class="form-control" value="2025-04-24" required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-group input-group-static mb-4">
+                      <label>Date d'échéance</label>
+                      <input type="date" class="form-control" value="2025-05-24" required>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="row mb-3">
+                  <div class="col-12">
+                    <h6>Articles</h6>
+                  </div>
+                </div>
+                
+                <div class="table-responsive">
+                  <table class="table" id="invoiceItemsTable">
+                    <thead>
+                      <tr>
+                        <th>Description</th>
+                        <th>Quantité</th>
+                        <th>Prix unitaire</th>
+                        <th>TVA</th>
+                        <th>Total</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <div class="input-group input-group-static mb-0">
+                            <input type="text" class="form-control" placeholder="Description de l'article" required>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="input-group input-group-static mb-0">
+                            <input type="number" class="form-control" value="1" min="1" required>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="input-group input-group-static mb-0">
+                            <input type="number" class="form-control" placeholder="0.00" step="0.01" required>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="input-group input-group-static mb-0">
+                            <select class="form-control">
+                              <option value="20">20%</option>
+                              <option value="14">14%</option>
+                              <option value="10">10%</option>
+                              <option value="7">7%</option>
+                              <option value="0">0%</option>
+                            </select>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="input-group input-group-static mb-0">
+                            <input type="text" class="form-control" placeholder="0.00" disabled>
+                          </div>
+                        </td>
+                        <td class="align-middle text-center">
+                          <a href="javascript:;" class="text-danger font-weight-bold text-xs remove-item" data-toggle="tooltip" data-original-title="Supprimer ligne">
+                            <i class="material-symbols-rounded text-sm">delete</i>
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                
+                <div class="row mb-4">
+                  <div class="col-12">
+                    <button type="button" class="btn btn-outline-primary btn-sm" id="addItemRow">
+                      <i class="material-symbols-rounded text-sm me-1">add</i> Ajouter une ligne
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="row justify-content-end">
+                  <div class="col-md-5">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <tbody>
+                          <tr>
+                            <td class="text-end"><strong>Sous-total:</strong></td>
+                            <td class="text-end">0.00 DH</td>
+                          </tr>
+                          <tr>
+                            <td class="text-end"><strong>Total TVA:</strong></td>
+                            <td class="text-end">0.00 DH</td>
+                          </tr>
+                          <tr>
+                            <td class="text-end"><strong>Total:</strong></td>
+                            <td class="text-end"><strong>0.00 DH</strong></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="input-group input-group-static mb-4">
+                      <label>Notes</label>
+                      <textarea class="form-control" rows="3" placeholder="Notes ou conditions particulières"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Annuler</button>
+              <button type="button" class="btn bg-gradient-dark">Enregistrer comme brouillon</button>
+              <button type="button" class="btn bg-gradient-primary">Créer et envoyer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="footer py-4">
+        <div class="container-fluid">
+          <div class="row align-items-center justify-content-lg-between">
+            <div class="col-lg-6 mb-lg-0 mb-4">
+              <div class="copyright text-center text-sm text-muted text-lg-start">
+                © <script>
+                  document.write(new Date().getFullYear())
+                </script> SEBUL
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                <li class="nav-item">
+                  <a href="javascript:;" class="nav-link text-muted">Accueil</a>
+                </li>
+                <li class="nav-item">
+                  <a href="javascript:;" class="nav-link text-muted">À propos</a>
+                </li>
+                <li class="nav-item">
+                  <a href="javascript:;" class="nav-link text-muted">Support</a>
+                </li>
+                <li class="nav-item">
+                  <a href="javascript:;" class="nav-link pe-0 text-muted">Mentions légales</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <div class="fixed-plugin">
+    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
+      <i class="material-symbols-rounded py-2">settings</i>
+    </a>
+    <div class="card shadow-lg">
+      <div class="card-header pb-0 pt-3">
+        <div class="float-start">
+          <h5 class="mt-3 mb-0">Configuration</h5>
+          <p>Options d'affichage</p>
+        </div>
+        <div class="float-end mt-4">
+          <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
+            <i class="material-symbols-rounded">close</i>
+          </button>
+        </div>
+      </div>
+      <hr class="horizontal dark my-1">
+      <div class="card-body pt-sm-3 pt-0">
+        <!-- Sidebar Backgrounds -->
+        <div>
+          <h6 class="mb-0">Couleur de la barre latérale</h6>
+        </div>
+        <a href="javascript:void(0)" class="switch-trigger background-color">
+          <div class="badge-colors my-2 text-start">
+            <span class="badge filter bg-gradient-primary active" data-color="primary" onclick="sidebarColor(this)"></span>
+            <span class="badge filter bg-gradient-dark" data-color="dark" onclick="sidebarColor(this)"></span>
+            <span class="badge filter bg-gradient-info" data-color="info" onclick="sidebarColor(this)"></span>
+            <span class="badge filter bg-gradient-success" data-color="success" onclick="sidebarColor(this)"></span>
+            <span class="badge filter bg-gradient-warning" data-color="warning" onclick="sidebarColor(this)"></span>
+            <span class="badge filter bg-gradient-danger" data-color="danger" onclick="sidebarColor(this)"></span>
+          </div>
+        </a>
+        <!-- Sidebar Mini -->
+        <div class="mt-3">
+          <h6 class="mb-0">Mode compact</h6>
+          <p class="text-sm">Activer le mode compact pour la barre latérale.</p>
+        </div>
+        <div class="form-check form-switch ps-0">
+          <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarMinimize" onclick="navbarMinimize(this)">
+        </div>
+        <hr class="horizontal dark my-sm-4">
+        <div class="mt-2 d-flex">
+          <h6 class="mb-0">Clair / Sombre</h6>
+          <div class="form-check form-switch ps-0 ms-auto my-auto">
+            <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark-version" onclick="darkMode(this)">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--   Core JS Files   -->
+  <script src="../assets/js/core/popper.min.js"></script>
+  <script src="../assets/js/core/bootstrap.min.js"></script>
+  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script>
+   var win = navigator.platform.indexOf('Win') > -1;
+if (win && document.querySelector('#sidenav-scrollbar')) {
+  var options = {
+    damping: '0.5'
+  };
+  Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+}
+
+// Fonctions pour la page de factures
+document.addEventListener('DOMContentLoaded', function() {
+  // Calcul automatique des totaux pour les articles de facture
+  const calculateInvoiceTotals = function() {
+    let subtotal = 0;
+    let totalTax = 0;
+    
+    // Parcourir chaque ligne d'article
+    const rows = document.querySelectorAll('#invoiceItemsTable tbody tr');
+    rows.forEach(row => {
+      const quantity = parseFloat(row.querySelector('td:nth-child(2) input').value) || 0;
+      const unitPrice = parseFloat(row.querySelector('td:nth-child(3) input').value) || 0;
+      const taxRate = parseFloat(row.querySelector('td:nth-child(4) select').value) || 0;
+      
+      const lineTotal = quantity * unitPrice;
+      const lineTax = lineTotal * (taxRate / 100);
+      
+      // Mettre à jour le total de la ligne
+      row.querySelector('td:nth-child(5) input').value = lineTotal.toFixed(2);
+      
+      subtotal += lineTotal;
+      totalTax += lineTax;
+    });
+    
+    // Mettre à jour les totaux dans le résumé
+    const total = subtotal + totalTax;
+    document.querySelector('table tbody tr:nth-child(1) td:nth-child(2)').textContent = subtotal.toFixed(2) + ' DH';
+    document.querySelector('table tbody tr:nth-child(2) td:nth-child(2)').textContent = totalTax.toFixed(2) + ' DH';
+    document.querySelector('table tbody tr:nth-child(3) td:nth-child(2)').textContent = total.toFixed(2) + ' DH';
+  };
+  
+  // Ajouter un événement pour recalculer les totaux lorsque les valeurs changent
+  document.querySelectorAll('#invoiceItemsTable input, #invoiceItemsTable select').forEach(el => {
+    el.addEventListener('change', calculateInvoiceTotals);
+    el.addEventListener('keyup', calculateInvoiceTotals);
+  });
+  
+  // Bouton pour ajouter une nouvelle ligne d'article
+  document.getElementById('addItemRow').addEventListener('click', function() {
+    const tableBody = document.querySelector('#invoiceItemsTable tbody');
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
+      <td>
+        <div class="input-group input-group-static mb-0">
+          <input type="text" class="form-control" placeholder="Description de l'article" required>
+        </div>
+      </td>
+      <td>
+        <div class="input-group input-group-static mb-0">
+          <input type="number" class="form-control" value="1" min="1" required>
+        </div>
+      </td>
+      <td>
+        <div class="input-group input-group-static mb-0">
+          <input type="number" class="form-control" placeholder="0.00" step="0.01" required>
+        </div>
+      </td>
+      <td>
+        <div class="input-group input-group-static mb-0">
+          <select class="form-control">
+            <option value="20">20%</option>
+            <option value="14">14%</option>
+            <option value="10">10%</option>
+            <option value="7">7%</option>
+            <option value="0">0%</option>
+          </select>
+        </div>
+      </td>
+      <td>
+        <div class="input-group input-group-static mb-0">
+          <input type="text" class="form-control" placeholder="0.00" disabled>
+        </div>
+      </td>
+      <td class="align-middle text-center">
+        <a href="javascript:;" class="text-danger font-weight-bold text-xs remove-item" data-toggle="tooltip" data-original-title="Supprimer ligne">
+          <i class="material-symbols-rounded text-sm">delete</i>
+        </a>
+      </td>
+    `;
+    tableBody.appendChild(newRow);
+    
+    // Ajouter des événements aux nouveaux champs
+    newRow.querySelectorAll('input, select').forEach(el => {
+      el.addEventListener('change', calculateInvoiceTotals);
+      el.addEventListener('keyup', calculateInvoiceTotals);
+    });
+    
+    // Ajouter l'événement de suppression
+    newRow.querySelector('.remove-item').addEventListener('click', function() {
+      newRow.remove();
+      calculateInvoiceTotals();
+    });
+  });
+  
+  // Événement pour supprimer une ligne d'article (pour les lignes existantes)
+  document.querySelectorAll('.remove-item').forEach(button => {
+    button.addEventListener('click', function() {
+      const row = this.closest('tr');
+      row.remove();
+      calculateInvoiceTotals();
+    });
+  });
+  
+  // Initialiser les tooltips
+  const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="tooltip"]'));
+  tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl);
+  });
+  
+  // Filtres pour les tableaux d'onglets
+  document.querySelectorAll('.nav-link[data-bs-toggle="tab"]').forEach(tab => {
+    tab.addEventListener('shown.bs.tab', function (event) {
+      // Logique pour filtrer les factures selon l'onglet sélectionné
+      // À implémenter si nécessaire
+    });
+  });
+});
+
+// Fonctions pour les paramètres d'interface
+function sidebarColor(element) {
+  const sidebar = document.querySelector('.sidenav');
+  const colors = ['primary', 'dark', 'info', 'success', 'warning', 'danger'];
+  
+  colors.forEach(color => {
+    sidebar.classList.remove('bg-gradient-' + color);
+  });
+  
+  sidebar.classList.add('bg-gradient-' + element.getAttribute('data-color'));
+}
+
+function navbarMinimize(element) {
+  const body = document.getElementsByTagName('body')[0];
+  if (element.checked) {
+    body.classList.add('navbar-mini');
+  } else {
+    body.classList.remove('navbar-mini');
+  }
+}
+
+function darkMode(element) {
+  const body = document.getElementsByTagName('body')[0];
+  const sidebar = document.querySelector('.sidenav');
+  
+  if (element.checked) {
+    body.classList.add('dark-version');
+    sidebar.classList.add('bg-dark');
+  } else {
+    body.classList.remove('dark-version');
+    sidebar.classList.remove('bg-dark');
+  }
+}
+
+// Notifications système
+const showNotification = function(message, type = 'info') {
+  const notification = document.createElement('div');
+  notification.className = `alert alert-${type} alert-dismissible text-white fade show`;
+  notification.style.position = 'fixed';
+  notification.style.top = '20px';
+  notification.style.right = '20px';
+  notification.style.zIndex = '9999';
+  notification.style.minWidth = '300px';
+  
+  notification.innerHTML = `
+    <span class="alert-icon"><i class="material-symbols-rounded">notifications</i></span>
+    <span>${message}</span>
+    <button type="button" class="btn-close text-white" data-bs-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  `;
+  
+  document.body.appendChild(notification);
+  
+  setTimeout(() => {
+    notification.classList.remove('show');
+    setTimeout(() => notification.remove(), 500);
+  }, 5000);
+};
+
+// Exemple d'utilisation pour les actions courantes
+document.addEventListener('DOMContentLoaded', function() {
+  // Événements pour les boutons d'action sur les factures
+  document.querySelectorAll('a[data-toggle="tooltip"]').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const action = this.getAttribute('data-original-title');
+      const invoiceNumber = this.closest('tr').querySelector('h6').textContent;
+      
+      switch(action) {
+        case 'Voir facture':
+          // Logique pour afficher les détails de la facture
+          console.log(`Affichage de la facture ${invoiceNumber}`);
+          break;
+        case 'Éditer facture':
+          // Logique pour éditer la facture
+          console.log(`Édition de la facture ${invoiceNumber}`);
+          break;
+        case 'Envoyer facture':
+          showNotification(`La facture ${invoiceNumber} a été envoyée par email avec succès.`, 'success');
+          break;
+        case 'Envoyer rappel':
+          showNotification(`Un rappel de paiement pour la facture ${invoiceNumber} a été envoyé.`, 'info');
+          break;
+        case 'Enregistrer paiement':
+          // Logique pour enregistrer un paiement (à implémenter)
+          // Afficher un modal de paiement
+          showNotification(`Paiement enregistré pour la facture ${invoiceNumber}.`, 'success');
+          break;
+      }
+    });
+  });
+  
+  // Exemple de code pour le formulaire de création de facture
+  const form = document.getElementById('addInvoiceForm');
+  if (form) {
+    const createInvoiceBtn = document.querySelector('.modal-footer .bg-gradient-primary');
+    createInvoiceBtn.addEventListener('click', function() {
+      // Valider le formulaire
+      const client = document.getElementById('clientSelect').value;
+      if (!client) {
+        showNotification('Veuillez sélectionner un client.', 'warning');
+        return;
+      }
+      
+      // Soumettre le formulaire (simulé)
+      showNotification('La facture a été créée avec succès.', 'success');
+      
+      // Fermer le modal
+      const modal = bootstrap.Modal.getInstance(document.getElementById('addInvoiceModal'));
+      modal.hide();
+    });
+  }
+});
+</script>
+</body>
+
+</html>

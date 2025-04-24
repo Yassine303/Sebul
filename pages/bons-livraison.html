@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <title>
+    SEBUL - Bons de Livraison
+  </title>
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
+  <!-- Nucleo Icons -->
+  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <!-- Material Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="../assets/css/material-dashboard.css?v=3.2.0" rel="stylesheet" />
+  <style>
+    /* SEBUL Color Theme - Based on logo colors */
+    :root {
+      --sebul-red: #E63E3A;
+      --sebul-blue: #1B4695;
+      --sebul-light-blue: #3266CC;
+    }
+    
+    .bg-gradient-primary {
+      background-image: linear-gradient(195deg, var(--sebul-red), #cc2924) !important;
+    }
+    
+    .bg-gradient-blue {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .navbar-vertical.bg-white .navbar-nav .nav-link.active {
+      background-color: var(--sebul-red);
+      color: white;
+    }
+    
+    .bg-gradient-dark {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .btn.bg-gradient-dark {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .text-info {
+      color: var(--sebul-blue) !important;
+    }
+    
+    .bg-gradient-info {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .text-success {
+      color: var(--sebul-red) !important;
+    }
+    
+    .bg-gradient-success {
+      background-image: linear-gradient(195deg, var(--sebul-red), #cc2924) !important;
+    }
+    
+    .text-primary {
+      color: var(--sebul-red) !important;
+    }
+    
+    .btn-primary, .btn.bg-gradient-primary {
+      background-color: var(--sebul-red);
+      background-image: linear-gradient(195deg, var(--sebul-red), #cc2924);
+    }
+    
+    .btn-outline-primary {
+      color: var(--sebul-red);
+      border-color: var(--sebul-red);
+    }
+    
+    .btn-outline-primary:hover {
+      background-color: var(--sebul-red);
+      border-color: var(--sebul-red);
+    }
+    
+    .progress-bar.bg-gradient-info {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .bg-gradient-warning {
+      background-image: linear-gradient(195deg, var(--sebul-red), #cc2924) !important;
+    }
+    
+    .active-nav-link {
+      background-color: var(--sebul-red) !important;
+      color: white !important;
+      box-shadow: 0 4px 6px -1px rgba(230, 62, 58, 0.15), 0 2px 4px -1px rgba(230, 62, 58, 0.06);
+    }
+    
+    .card .card-header-primary {
+      background: linear-gradient(195deg, var(--sebul-red), #cc2924);
+      box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(230, 62, 58, 0.4);
+    }
+    
+    .status-badge {
+      padding: 5px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    
+    .status-badge.delivered {
+      background-color: #4CAF50;
+      color: white;
+    }
+    
+    .status-badge.pending {
+      background-color: #FFC107;
+      color: black;
+    }
+    
+    .status-badge.preparing {
+      background-color: var(--sebul-blue);
+      color: white;
+    }
+    
+    .status-badge.cancelled {
+      background-color: var(--sebul-red);
+      color: white;
+    }
+    
+    .delivery-info {
+      padding: 10px;
+      border-radius: 8px;
+      background-color: rgba(27, 70, 149, 0.05);
+      margin-bottom: 15px;
+    }
+    
+    .bl-filter-section {
+      margin-bottom: 20px;
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body class="g-sidenav-show bg-gray-100">
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2 bg-white my-2" id="sidenav-main">
+    <div class="sidenav-header">
+      <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+      <img src="../assets/img/logo (1).png" height="105px" hspace="20">
+    </div>
+    <hr class="horizontal dark mt-0 mb-2">
+    <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="../pages/dashboard.html">
+            <i class="material-symbols-rounded opacity-5">dashboard</i>
+            <span class="nav-link-text ms-1">Dashboard</span>
+          </a>
+        </li>
+  
+        <!-- 1. Gestion commerciale -->
+        <li class="nav-item">
+          <a data-bs-toggle="collapse" href="#gestionCommercialePages" class="nav-link text-dark" aria-controls="gestionCommercialePages" role="button" aria-expanded="true">
+            <i class="material-symbols-rounded opacity-5">store</i>
+            <span class="nav-link-text ms-1">Gestion commerciale</span>
+            <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+          </a>
+          <div class="collapse show" id="gestionCommercialePages">
+            <ul class="nav ms-4">
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/clients.html">
+                  <span class="nav-link-text ms-1">Clients</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/devis.html">
+                  <span class="nav-link-text ms-1">Devis</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/contrats.html">
+                  <span class="nav-link-text ms-1">Contrats</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/factures.html">
+                  <span class="nav-link-text ms-1">Factures</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active-nav-link" href="../pages/bons-livraison.html">
+                  <span class="nav-link-text ms-1">Bons de Livraison (BL)</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+  
+        <!-- 2. Parc et Achats -->
+        <li class="nav-item">
+          <a data-bs-toggle="collapse" href="#parcAchatsPages" class="nav-link text-dark" aria-controls="parcAchatsPages" role="button" aria-expanded="false">
+            <i class="material-symbols-rounded opacity-5">build</i>
+            <span class="nav-link-text ms-1">Parc & Achats</span>
+            <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+          </a>
+          <div class="collapse" id="parcAchatsPages">
+            <ul class="nav ms-4">
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/machines.html">
+                  <span class="nav-link-text ms-1">Machines/Engins</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/fournisseurs.html">
+                  <span class="nav-link-text ms-1">Fournisseurs</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/commandes.html">
+                  <span class="nav-link-text ms-1">Commandes fournisseurs</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/bons-commande.html">
+                  <span class="nav-link-text ms-1">Bons de commande</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+  
+        <!-- 3. Transport et Services -->
+        <li class="nav-item">
+          <a data-bs-toggle="collapse" href="#transportServicesPages" class="nav-link text-dark" aria-controls="transportServicesPages" role="button" aria-expanded="false">
+            <i class="material-symbols-rounded opacity-5">local_shipping</i>
+            <span class="nav-link-text ms-1">Transport & Services</span>
+            <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+          </a>
+          <div class="collapse" id="transportServicesPages">
+            <ul class="nav ms-4">
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/missions.html">
+                  <span class="nav-link-text ms-1">Missions de transport</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/factures-transitaire.html">
+                  <span class="nav-link-text ms-1">Factures transitaire</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/produits-services.html">
+                  <span class="nav-link-text ms-1">Produits/Services</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+  
+        <!-- 4. Finances -->
+        <li class="nav-item">
+          <a data-bs-toggle="collapse" href="#financesPages" class="nav-link text-dark" aria-controls="financesPages" role="button" aria-expanded="false">
+            <i class="material-symbols-rounded opacity-5">account_balance</i>
+            <span class="nav-link-text ms-1">Finances</span>
+            <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+          </a>
+          <div class="collapse" id="financesPages">
+            <ul class="nav ms-4">
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/charges.html">
+                  <span class="nav-link-text ms-1">Charges</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/paiements.html">
+                  <span class="nav-link-text ms-1">Paiements</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/rapports.html">
+                  <span class="nav-link-text ms-1">Rapports & Statistiques</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+  
+        <!-- 5. Administration -->
+        <li class="nav-item">
+          <a data-bs-toggle="collapse" href="#administrationPages" class="nav-link text-dark" aria-controls="administrationPages" role="button" aria-expanded="false">
+            <i class="material-symbols-rounded opacity-5">admin_panel_settings</i>
+            <span class="nav-link-text ms-1">Administration</span>
+            <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+          </a>
+          <div class="collapse" id="administrationPages">
+            <ul class="nav ms-4">
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/utilisateurs.html">
+                  <span class="nav-link-text ms-1">Utilisateurs & rôles</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/parametres.html">
+                  <span class="nav-link-text ms-1">Paramètres</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/taxes.html">
+                  <span class="nav-link-text ms-1">TVA & taxes</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+  
+        <li class="nav-item mt-3">
+          <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-5">Account pages</h6>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="../pages/profile.html">
+            <i class="material-symbols-rounded opacity-5">person</i>
+            <span class="nav-link-text ms-1">Profile</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="../pages/sign-in.html">
+            <i class="material-symbols-rounded opacity-5">login</i>
+            <span class="nav-link-text ms-1">Sign In</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="../pages/sign-up.html">
+            <i class="material-symbols-rounded opacity-5">assignment</i>
+            <span class="nav-link-text ms-1">Sign Up</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="sidenav-footer position-absolute w-100 bottom-0">
+      <div class="mx-3">
+        
+      </div>
+    </div>
+  </aside>
+  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
+    <!-- Navbar -->
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-3 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
+      <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Bons de Livraison</li>
+          </ol>
+        </nav>
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+            <div class="input-group input-group-outline">
+              <label class="form-label">Rechercher...</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+          <ul class="navbar-nav d-flex align-items-center justify-content-end">
+            <li class="nav-item d-flex align-items-center">
+              <a class="btn btn-outline-primary btn-sm mb-0 me-3" href="javascript:;"><i class="material-symbols-rounded">add</i> Nouveau BL</a>
+            </li>
+            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                <div class="sidenav-toggler-inner">
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                </div>
+              </a>
+            </li>
+            <li class="nav-item px-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0">
+                <i class="material-symbols-rounded fixed-plugin-button-nav">settings</i>
+              </a>
+            </li>
+            <li class="nav-item dropdown pe-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="material-symbols-rounded">notifications</i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                <li class="mb-2">
+                  <a class="dropdown-item border-radius-md" href="javascript:;">
+                    <div class="d-flex py-1">
+                      <div class="my-auto">
+                        <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3">
+                      </div>
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="text-sm font-weight-normal mb-1">
+                          <span class="font-weight-bold">Nouveau BL</span> créé pour client ABC
+                        </h6>
+                        <p class="text-xs text-secondary mb-0">
+                          <i class="fa fa-clock me-1"></i>
+                          13 minutes ago
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <li class="mb-2">
+                  <a class="dropdown-item border-radius-md" href="javascript:;">
+                    <div class="d-flex py-1">
+                      <div class="my-auto">
+                        <img src="../assets/img/small-logos/logo-spotify.svg" class="avatar avatar-sm bg-gradient-blue me-3">
+                      </div>
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="text-sm font-weight-normal mb-1">
+                          <span class="font-weight-bold">BL expédié</span> pour client XYZ
+                        </h6>
+                        <p class="text-xs text-secondary mb-0">
+                          <i class="fa fa-clock me-1"></i>
+                          1 jour
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item border-radius-md" href="javascript:;">
+                    <div class="d-flex py-1">
+                      <div class="avatar avatar-sm bg-gradient-blue me-3 my-auto">
+                        <i class="material-symbols-rounded text-white">inventory</i>
+                      </div>
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="text-sm font-weight-normal mb-1">
+                          Livraison confirmée par client DEF
+                        </h6>
+                        <p class="text-xs text-secondary mb-0">
+                          <i class="fa fa-clock me-1"></i>
+                          2 jours
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item d-flex align-items-center">
+              <a href="../pages/sign-in.html" class="nav-link text-body font-weight-bold px-0">
+                <i class="material-symbols-rounded">account_circle</i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- End Navbar -->
+    <div class="container-fluid py-2">
+      <div class="row">
+        <div class="ms-3">
+          <h3 class="mb-0 h4 font-weight-bolder">Bons de Livraison</h3>
+          <p class="mb-4">
+            Gestion des bons de livraison et suivi des expéditions.
+          </p>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-header p-2 ps-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <p class="text-sm mb-0 text-capitalize">BL en préparation</p>
+                  <h4 class="mb-0">12</h4>
+                </div>
+                <div class="icon icon-md icon-shape bg-gradient-primary shadow text-center border-radius-lg">
+                  <i class="material-symbols-rounded opacity-10">inventory</i>
+                </div>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-2 ps-3">
+              <p class="mb-0 text-sm"><span class="text-success font-weight-bolder">+2 </span>depuis hier</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-header p-2 ps-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <p class="text-sm mb-0 text-capitalize">BL en attente d'expédition</p>
+                  <h4 class="mb-0">8</h4>
+                </div>
+                <div class="icon icon-md icon-shape bg-gradient-blue shadow text-center border-radius-lg">
+                  <i class="material-symbols-rounded opacity-10">pending</i>
+                </div>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-2 ps-3">
+              <p class="mb-0 text-sm"><span class="text-success font-weight-bolder">+5% </span>cette semaine</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-header p-2 ps-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <p class="text-sm mb-0 text-capitalize">BL en cours de livraison</p>
+                  <h4 class="mb-0">17</h4>
+                </div>
+                <div class="icon icon-md icon-shape bg-gradient-primary shadow text-center border-radius-lg">
+                  <i class="material-symbols-rounded opacity-10">local_shipping</i>
+                </div>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-2 ps-3">
+              <p class="mb-0 text-sm"><span class="text-danger font-weight-bolder">-3% </span>par rapport à la semaine dernière</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+          <div class="card">
+            <div class="card-header p-2 ps-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <p class="text-sm mb-0 text-capitalize">BL livrés ce mois</p>
+                  <h4 class="mb-0">45</h4>
+                </div>
+                <div class="icon icon-md icon-shape bg-gradient-blue shadow text-center border-radius-lg">
+                  <i class="material-symbols-rounded opacity-10">check_circle</i>
+                </div>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-2 ps-3">
+              <p class="mb-0 text-sm"><span class="text-success font-weight-bolder">+12% </span>ce mois-ci</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Filtres -->
+      <div class="row mt-4">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-header pb-0">
+              <h6>Filtres</h6>
+            </div>
+            <div class="card-body pt-0 pb-2">
+              <div class="bl-filter-section">
+                <div class="row align-items-center">
+                  <div class="col-md-3">
+                    <div class="input-group input-group-static mb-2">
+                      <label>Client</label>
+                      <select class="form-control">
+                        <option value="">Tous les clients</option>
+                        <option value="1">Client A</option>
+                        <option value="2">Client B</option>
+                        <option value="3">Client C</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="input-group input-group-static mb-2">
+                      <label>Statut</label>
+                      <select class="form-control">
+                        <option value="">Tous les statuts</option>
+                        <option value="1">En préparation</option>
+                        <option value="2">En attente</option>
+                        <option value="3">En livraison</option>
+                        <option value="4">Livré</option>
+                        <option value="5">Annulé</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="input-group input-group-static mb-2">
+                      <label>Date de début</label>
+                      <input type="date" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="input-group input-group-static mb-2">
+                      <label>Date de fin</label>
+                      <input type="date" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-md-2 d-flex align-items-end">
+                    <button class="btn btn-primary w-100 mb-2">Filtrer</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Liste des BL -->
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header pb-0">
+              <div class="row">
+                <div class="col-lg-6 col-7">
+                  <h6>Liste des bons de livraison</h6>
+                  <p class="text-sm mb-0">
+                    <i class="fa fa-check text-info" aria-hidden="true"></i>
+                    <span class="font-weight-bold ms-1">45 livrés</span> ce mois-ci
+                  </p>
+                </div>
+                <div class="col-lg-6 col-5 my-auto text-end">
+                  <div class="dropdown float-lg-end pe-4">
+                    <a class="cursor-pointer" id="dropdownTable" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="fa fa-ellipsis-v text-secondary"></i>
+                    </a>
+                    <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
+                        <li><a class="dropdown-item border-radius-md" href="javascript:;">Exporter en CSV</a></li>
+                        <li><a class="dropdown-item border-radius-md" href="javascript:;">Exporter en PDF</a></li>
+                        <li><a class="dropdown-item border-radius-md" href="javascript:;">Imprimer la liste</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body px-0 pb-2">
+                <div class="table-responsive">
+                  <table class="table align-items-center mb-0">
+                    <thead>
+                      <tr>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Référence BL</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Client</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date d'émission</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date livraison</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Statut</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Transporteur</th>
+                        <th class="text-secondary opacity-7"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <div class="d-flex px-2 py-1">
+                            <div class="d-flex flex-column justify-content-center">
+                              <h6 class="mb-0 text-sm">BL-2025-0452</h6>
+                              <p class="text-xs text-secondary mb-0">Réf. Facture: F-2025-0338</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0">SARL Durand Construction</p>
+                          <p class="text-xs text-secondary mb-0">Marseille, France</p>
+                        </td>
+                        <td class="align-middle text-center text-sm">
+                          <p class="text-xs font-weight-bold mb-0">18/04/2025</p>
+                        </td>
+                        <td class="align-middle text-center">
+                          <span class="text-secondary text-xs font-weight-bold">22/04/2025</span>
+                        </td>
+                        <td class="align-middle">
+                          <span class="status-badge delivered">Livré</span>
+                        </td>
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0">TransMed Logistics</p>
+                        </td>
+                        <td class="align-middle">
+                          <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                            <i class="material-symbols-rounded">visibility</i>
+                          </a>
+                          <a href="javascript:;" class="text-secondary font-weight-bold text-xs ms-2" data-toggle="tooltip" data-original-title="Edit user">
+                            <i class="material-symbols-rounded">edit</i>
+                          </a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="d-flex px-2 py-1">
+                            <div class="d-flex flex-column justify-content-center">
+                              <h6 class="mb-0 text-sm">BL-2025-0451</h6>
+                              <p class="text-xs text-secondary mb-0">Réf. Facture: F-2025-0337</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0">ETS Laurent & Fils</p>
+                          <p class="text-xs text-secondary mb-0">Lyon, France</p>
+                        </td>
+                        <td class="align-middle text-center text-sm">
+                          <p class="text-xs font-weight-bold mb-0">17/04/2025</p>
+                        </td>
+                        <td class="align-middle text-center">
+                          <span class="text-secondary text-xs font-weight-bold">23/04/2025</span>
+                        </td>
+                        <td class="align-middle">
+                          <span class="status-badge preparing">En préparation</span>
+                        </td>
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0">SEBUL Transport</p>
+                        </td>
+                        <td class="align-middle">
+                          <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                            <i class="material-symbols-rounded">visibility</i>
+                          </a>
+                          <a href="javascript:;" class="text-secondary font-weight-bold text-xs ms-2" data-toggle="tooltip" data-original-title="Edit user">
+                            <i class="material-symbols-rounded">edit</i>
+                          </a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="d-flex px-2 py-1">
+                            <div class="d-flex flex-column justify-content-center">
+                              <h6 class="mb-0 text-sm">BL-2025-0450</h6>
+                              <p class="text-xs text-secondary mb-0">Réf. Facture: F-2025-0336</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0">Société Martin BTP</p>
+                          <p class="text-xs text-secondary mb-0">Paris, France</p>
+                        </td>
+                        <td class="align-middle text-center text-sm">
+                          <p class="text-xs font-weight-bold mb-0">16/04/2025</p>
+                        </td>
+                        <td class="align-middle text-center">
+                          <span class="text-secondary text-xs font-weight-bold">20/04/2025</span>
+                        </td>
+                        <td class="align-middle">
+                          <span class="status-badge pending">En attente</span>
+                        </td>
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0">TransEuro Express</p>
+                        </td>
+                        <td class="align-middle">
+                          <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                            <i class="material-symbols-rounded">visibility</i>
+                          </a>
+                          <a href="javascript:;" class="text-secondary font-weight-bold text-xs ms-2" data-toggle="tooltip" data-original-title="Edit user">
+                            <i class="material-symbols-rounded">edit</i>
+                          </a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="d-flex px-2 py-1">
+                            <div class="d-flex flex-column justify-content-center">
+                              <h6 class="mb-0 text-sm">BL-2025-0449</h6>
+                              <p class="text-xs text-secondary mb-0">Réf. Facture: F-2025-0335</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0">Dubois Construction SA</p>
+                          <p class="text-xs text-secondary mb-0">Lille, France</p>
+                        </td>
+                        <td class="align-middle text-center text-sm">
+                          <p class="text-xs font-weight-bold mb-0">15/04/2025</p>
+                        </td>
+                        <td class="align-middle text-center">
+                          <span class="text-secondary text-xs font-weight-bold">19/04/2025</span>
+                        </td>
+                        <td class="align-middle">
+                          <span class="status-badge cancelled">Annulé</span>
+                        </td>
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0">--</p>
+                        </td>
+                        <td class="align-middle">
+                          <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                            <i class="material-symbols-rounded">visibility</i>
+                          </a>
+                          <a href="javascript:;" class="text-secondary font-weight-bold text-xs ms-2" data-toggle="tooltip" data-original-title="Edit user">
+                            <i class="material-symbols-rounded">edit</i>
+                          </a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="d-flex px-2 py-1">
+                            <div class="d-flex flex-column justify-content-center">
+                              <h6 class="mb-0 text-sm">BL-2025-0448</h6>
+                              <p class="text-xs text-secondary mb-0">Réf. Facture: F-2025-0334</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0">Garcia Enterprises</p>
+                          <p class="text-xs text-secondary mb-0">Barcelona, Spain</p>
+                        </td>
+                        <td class="align-middle text-center text-sm">
+                          <p class="text-xs font-weight-bold mb-0">14/04/2025</p>
+                        </td>
+                        <td class="align-middle text-center">
+                          <span class="text-secondary text-xs font-weight-bold">18/04/2025</span>
+                        </td>
+                        <td class="align-middle">
+                          <span class="status-badge delivered">Livré</span>
+                        </td>
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0">Iberian Transport</p>
+                        </td>
+                        <td class="align-middle">
+                          <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                            <i class="material-symbols-rounded">visibility</i>
+                          </a>
+                          <a href="javascript:;" class="text-secondary font-weight-bold text-xs ms-2" data-toggle="tooltip" data-original-title="Edit user">
+                            <i class="material-symbols-rounded">edit</i>
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="d-flex justify-content-center mt-3">
+                  <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                      <li class="page-item disabled">
+                        <a class="page-link" href="javascript:;" tabindex="-1">
+                          <span class="material-symbols-rounded">chevron_left</span>
+                          <span class="sr-only">Previous</span>
+                        </a>
+                      </li>
+                      <li class="page-item active"><a class="page-link" href="javascript:;">1</a></li>
+                      <li class="page-item"><a class="page-link" href="javascript:;">2</a></li>
+                      <li class="page-item"><a class="page-link" href="javascript:;">3</a></li>
+                      <li class="page-item">
+                        <a class="page-link" href="javascript:;">
+                          <span class="material-symbols-rounded">chevron_right</span>
+                          <span class="sr-only">Next</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Latest Deliveries -->
+        <div class="row">
+          <div class="col-12">
+            <div class="card mb-4">
+              <div class="card-header pb-0">
+                <h6>Dernières livraisons</h6>
+              </div>
+              <div class="card-body px-0 pt-0 pb-2">
+                <div class="table-responsive p-0">
+                  <table class="table align-items-center justify-content-center mb-0">
+                    <thead>
+                      <tr>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Référence BL</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Client</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Date livraison</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Signature</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <div class="d-flex px-2">
+                            <div>
+                              <i class="material-symbols-rounded text-primary me-2">inventory_2</i>
+                            </div>
+                            <div class="my-auto">
+                              <h6 class="mb-0 text-sm">BL-2025-0452</h6>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <p class="text-sm font-weight-bold mb-0">SARL Durand Construction</p>
+                        </td>
+                        <td>
+                          <span class="text-xs font-weight-bold">22/04/2025 - 14:30</span>
+                        </td>
+                        <td class="align-middle text-center">
+                          <div class="d-flex align-items-center justify-content-center">
+                            <span class="me-2 text-xs font-weight-bold">Complète</span>
+                            <div>
+                              <i class="material-symbols-rounded text-success">verified</i>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="align-middle">
+                          <button class="btn btn-link text-secondary mb-0">
+                            <i class="material-symbols-rounded text-sm">visibility</i>
+                          </button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="d-flex px-2">
+                            <div>
+                              <i class="material-symbols-rounded text-primary me-2">inventory_2</i>
+                            </div>
+                            <div class="my-auto">
+                              <h6 class="mb-0 text-sm">BL-2025-0448</h6>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <p class="text-sm font-weight-bold mb-0">Garcia Enterprises</p>
+                        </td>
+                        <td>
+                          <span class="text-xs font-weight-bold">18/04/2025 - 10:15</span>
+                        </td>
+                        <td class="align-middle text-center">
+                          <div class="d-flex align-items-center justify-content-center">
+                            <span class="me-2 text-xs font-weight-bold">Partielle</span>
+                            <div>
+                              <i class="material-symbols-rounded text-warning">warning</i>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="align-middle">
+                          <button class="btn btn-link text-secondary mb-0">
+                            <i class="material-symbols-rounded text-sm">visibility</i>
+                          </button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="d-flex px-2">
+                            <div>
+                              <i class="material-symbols-rounded text-primary me-2">inventory_2</i>
+                            </div>
+                            <div class="my-auto">
+                              <h6 class="mb-0 text-sm">BL-2025-0447</h6>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <p class="text-sm font-weight-bold mb-0">Smith Industries Ltd</p>
+                        </td>
+                        <td>
+                          <span class="text-xs font-weight-bold">17/04/2025 - 09:45</span>
+                        </td>
+                        <td class="align-middle text-center">
+                          <div class="d-flex align-items-center justify-content-center">
+                            <span class="me-2 text-xs font-weight-bold">Complète</span>
+                            <div>
+                              <i class="material-symbols-rounded text-success">verified</i>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="align-middle">
+                          <button class="btn btn-link text-secondary mb-0">
+                            <i class="material-symbols-rounded text-sm">visibility</i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <footer class="footer py-4">
+          <div class="container-fluid">
+            <div class="row align-items-center justify-content-lg-between">
+              <div class="col-lg-6 mb-lg-0 mb-4">
+                <div class="copyright text-center text-sm text-muted text-lg-start">
+                  © <script>
+                    document.write(new Date().getFullYear())
+                  </script>
+                  SEBUL - Tous droits réservés
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                  <li class="nav-item">
+                    <a href="javascript:;" class="nav-link text-muted">Accueil</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="javascript:;" class="nav-link text-muted">À propos</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="javascript:;" class="nav-link text-muted">Contact</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="javascript:;" class="nav-link pe-0 text-muted">Aide</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </main>
+    <div class="fixed-plugin">
+      <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
+        <i class="material-symbols-rounded py-2">settings</i>
+      </a>
+      <div class="card shadow-lg">
+        <div class="card-header pb-0 pt-3">
+          <div class="float-start">
+            <h5 class="mt-3 mb-0">Configuration SEBUL</h5>
+            <p>Options d'affichage du tableau de bord.</p>
+          </div>
+          <div class="float-end mt-4">
+            <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
+              <i class="material-symbols-rounded">close</i>
+            </button>
+          </div>
+        </div>
+        <hr class="horizontal dark my-1">
+        <div class="card-body pt-sm-3 pt-0">
+          <div>
+            <h6 class="mb-0">Couleurs de la barre latérale</h6>
+          </div>
+          <a href="javascript:void(0)" class="switch-trigger background-color">
+            <div class="badge-colors my-2 text-start">
+              <span class="badge filter bg-gradient-primary active" data-color="primary" onclick="sidebarColor(this)"></span>
+              <span class="badge filter bg-gradient-blue" data-color="blue" onclick="sidebarColor(this)"></span>
+              <span class="badge filter bg-gradient-dark" data-color="dark" onclick="sidebarColor(this)"></span>
+              <span class="badge filter bg-gradient-info" data-color="info" onclick="sidebarColor(this)"></span>
+            </div>
+          </a>
+          <div class="mt-3">
+            <h6 class="mb-0">Type de la barre latérale</h6>
+            <p class="text-sm">Choisissez entre les 2 types de barre latérale.</p>
+          </div>
+          <div class="d-flex">
+            <button class="btn bg-gradient-primary w-100 px-3 mb-2 active" data-class="bg-gradient-dark" onclick="sidebarType(this)">Foncé</button>
+            <button class="btn bg-gradient-primary w-100 px-3 mb-2 ms-2" data-class="bg-transparent" onclick="sidebarType(this)">Transparent</button>
+            <button class="btn bg-gradient-primary w-100 px-3 mb-2 ms-2" data-class="bg-white" onclick="sidebarType(this)">Blanc</button>
+          </div>
+          <p class="text-sm d-xl-none d-block mt-2">Vous pouvez changer le type de barre latérale uniquement sur la vue bureau.</p>
+          <hr class="horizontal dark my-sm-4">
+          <div class="mt-2 d-flex">
+            <h6 class="mb-0">Thème clair / sombre</h6>
+            <div class="form-check form-switch ps-0 ms-auto my-auto">
+              <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark-version" onclick="darkMode(this)">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!--   Core JS Files   -->
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
+    <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="../assets/js/plugins/chartjs.min.js"></script>
+    
+    <script>
+      var win = navigator.platform.indexOf('Win') > -1;
+      if (win && document.querySelector('#sidenav-scrollbar')) {
+        var options = {
+          damping: '0.5'
+        }
+        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+      }
+    </script>
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="../assets/js/material-dashboard.min.js?v=3.2.0"></script>
+  </body>
+  
+  </html>

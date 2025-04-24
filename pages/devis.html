@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <title>
+    SEBUL Devis
+  </title>
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
+  <!-- Nucleo Icons -->
+  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <!-- Material Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="../assets/css/material-dashboard.css?v=3.2.0" rel="stylesheet" />
+  <style>
+    /* SEBUL Color Theme - Based on logo colors */
+    :root {
+      --sebul-red: #E63E3A;
+      --sebul-blue: #1B4695;
+      --sebul-light-blue: #3266CC;
+    }
+    
+    .bg-gradient-primary {
+      background-image: linear-gradient(195deg, var(--sebul-red), #cc2924) !important;
+    }
+    
+    .bg-gradient-blue {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .navbar-vertical.bg-white .navbar-nav .nav-link.active {
+      background-color: var(--sebul-red);
+      color: white;
+    }
+    
+    .bg-gradient-dark {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .btn.bg-gradient-dark {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .text-info {
+      color: var(--sebul-blue) !important;
+    }
+    
+    .bg-gradient-info {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .text-success {
+      color: var(--sebul-red) !important;
+    }
+    
+    .bg-gradient-success {
+      background-image: linear-gradient(195deg, var(--sebul-red), #cc2924) !important;
+    }
+    
+    .text-primary {
+      color: var(--sebul-red) !important;
+    }
+    
+    .btn-primary, .btn.bg-gradient-primary {
+      background-color: var(--sebul-red);
+      background-image: linear-gradient(195deg, var(--sebul-red), #cc2924);
+    }
+    
+    .btn-outline-primary {
+      color: var(--sebul-red);
+      border-color: var(--sebul-red);
+    }
+    
+    .btn-outline-primary:hover {
+      background-color: var(--sebul-red);
+      border-color: var(--sebul-red);
+    }
+    
+    .progress-bar.bg-gradient-info {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .bg-gradient-warning {
+      background-image: linear-gradient(195deg, var(--sebul-red), #cc2924) !important;
+    }
+    
+    .active-nav-link {
+      background-color: var(--sebul-red) !important;
+      color: white !important;
+      box-shadow: 0 4px 6px -1px rgba(230, 62, 58, 0.15), 0 2px 4px -1px rgba(230, 62, 58, 0.06);
+    }
+    
+    .devis-tag {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      border-radius: 0.25rem;
+      margin-right: 0.25rem;
+    }
+    
+    .devis-tag.en-cours {
+      background-color: rgba(27, 70, 149, 0.1);
+      color: var(--sebul-blue);
+    }
+    
+    .devis-tag.accepte {
+      background-color: rgba(66, 186, 150, 0.1);
+      color: #42BA96;
+    }
+    
+    .devis-tag.refuse {
+      background-color: rgba(230, 62, 58, 0.1);
+      color: var(--sebul-red);
+    }
+    
+    .devis-tag.expire {
+      background-color: rgba(130, 130, 130, 0.1);
+      color: #828282;
+    }
+  </style>
+</head>
+
+<body class="g-sidenav-show bg-gray-100">
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2 bg-white my-2" id="sidenav-main">
+    <div class="sidenav-header">
+      <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+      <img src="../assets/img/logo (1).png" height="105px" hspace="20">
+    </div>
+    <hr class="horizontal dark mt-0 mb-2">
+    <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="../pages/dashboard.html">
+                <i class="material-symbols-rounded opacity-5">dashboard</i>
+                <span class="nav-link-text ms-1">Dashboard</span>
+              </a>
+        </li>
+  
+        <!-- 1. Gestion commerciale -->
+        <li class="nav-item">
+          <a data-bs-toggle="collapse" href="#gestionCommercialePages" class="nav-link text-dark" aria-controls="gestionCommercialePages" role="button" aria-expanded="true">
+            <i class="material-symbols-rounded opacity-5">store</i>
+            <span class="nav-link-text ms-1">Gestion commerciale</span>
+            <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+          </a>
+          <div class="collapse show" id="gestionCommercialePages">
+            <ul class="nav ms-4">
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/clients.html">
+                  <span class="nav-link-text ms-1">Clients</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active-nav-link" href="../pages/devis.html">
+                  <span class="nav-link-text ms-1">Devis</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/contrats.html">
+                  <span class="nav-link-text ms-1">Contrats</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/factures.html">
+                  <span class="nav-link-text ms-1">Factures</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/bons-livraison.html">
+                  <span class="nav-link-text ms-1">Bons de Livraison (BL)</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+  
+        <!-- 2. Parc et Achats -->
+        <li class="nav-item">
+          <a data-bs-toggle="collapse" href="#parcAchatsPages" class="nav-link text-dark" aria-controls="parcAchatsPages" role="button" aria-expanded="false">
+            <i class="material-symbols-rounded opacity-5">build</i>
+            <span class="nav-link-text ms-1">Parc & Achats</span>
+            <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+          </a>
+          <div class="collapse" id="parcAchatsPages">
+            <ul class="nav ms-4">
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/machines.html">
+                  <span class="nav-link-text ms-1">Machines/Engins</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/fournisseurs.html">
+                  <span class="nav-link-text ms-1">Fournisseurs</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/commandes.html">
+                  <span class="nav-link-text ms-1">Commandes fournisseurs</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/bons-commande.html">
+                  <span class="nav-link-text ms-1">Bons de commande</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+  
+        <!-- 3. Transport et Services -->
+        <li class="nav-item">
+          <a data-bs-toggle="collapse" href="#transportServicesPages" class="nav-link text-dark" aria-controls="transportServicesPages" role="button" aria-expanded="false">
+            <i class="material-symbols-rounded opacity-5">local_shipping</i>
+            <span class="nav-link-text ms-1">Transport & Services</span>
+            <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+          </a>
+          <div class="collapse" id="transportServicesPages">
+            <ul class="nav ms-4">
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/missions.html">
+                  <span class="nav-link-text ms-1">Missions de transport</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/factures-transitaire.html">
+                  <span class="nav-link-text ms-1">Factures transitaire</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/produits-services.html">
+                  <span class="nav-link-text ms-1">Produits/Services</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+  
+        <!-- 4. Finances -->
+        <li class="nav-item">
+          <a data-bs-toggle="collapse" href="#financesPages" class="nav-link text-dark" aria-controls="financesPages" role="button" aria-expanded="false">
+            <i class="material-symbols-rounded opacity-5">account_balance</i>
+            <span class="nav-link-text ms-1">Finances</span>
+            <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+          </a>
+          <div class="collapse" id="financesPages">
+            <ul class="nav ms-4">
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/charges.html">
+                  <span class="nav-link-text ms-1">Charges</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/paiements.html">
+                  <span class="nav-link-text ms-1">Paiements</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/rapports.html">
+                  <span class="nav-link-text ms-1">Rapports & Statistiques</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+  
+        <!-- 5. Administration -->
+        <li class="nav-item">
+          <a data-bs-toggle="collapse" href="#administrationPages" class="nav-link text-dark" aria-controls="administrationPages" role="button" aria-expanded="false">
+            <i class="material-symbols-rounded opacity-5">admin_panel_settings</i>
+            <span class="nav-link-text ms-1">Administration</span>
+            <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+          </a>
+          <div class="collapse" id="administrationPages">
+            <ul class="nav ms-4">
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/utilisateurs.html">
+                  <span class="nav-link-text ms-1">Utilisateurs & rôles</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/parametres.html">
+                  <span class="nav-link-text ms-1">Paramètres</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/taxes.html">
+                  <span class="nav-link-text ms-1">TVA & taxes</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+  
+        <li class="nav-item mt-3">
+          <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-5">Account pages</h6>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="../pages/profile.html">
+            <i class="material-symbols-rounded opacity-5">person</i>
+            <span class="nav-link-text ms-1">Profile</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="../pages/sign-in.html">
+            <i class="material-symbols-rounded opacity-5">login</i>
+            <span class="nav-link-text ms-1">Sign In</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="../pages/sign-up.html">
+            <i class="material-symbols-rounded opacity-5">assignment</i>
+            <span class="nav-link-text ms-1">Sign Up</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="sidenav-footer position-absolute w-100 bottom-0">
+      <div class="mx-3">
+        
+      </div>
+    </div>
+  </aside>
+  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
+    <!-- Navbar -->
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-3 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
+      <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Gestion commerciale</a></li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Devis</li>
+          </ol>
+        </nav>
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+            <div class="input-group input-group-outline">
+              <label class="form-label">Rechercher un devis...</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+          <ul class="navbar-nav d-flex align-items-center justify-content-end">
+            <li class="nav-item d-flex align-items-center">
+              <a class="btn btn-outline-primary btn-sm mb-0 me-3" href="javascript:;">
+                <i class="material-symbols-rounded opacity-5 me-1">add</i> Nouveau devis
+              </a>
+            </li>
+            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                <div class="sidenav-toggler-inner">
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                </div>
+              </a>
+            </li>
+            <li class="nav-item px-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0">
+                <i class="material-symbols-rounded fixed-plugin-button-nav">settings</i>
+              </a>
+            </li>
+            <li class="nav-item dropdown pe-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="material-symbols-rounded">notifications</i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                <li class="mb-2">
+                  <a class="dropdown-item border-radius-md" href="javascript:;">
+                    <div class="d-flex py-1">
+                      <div class="avatar avatar-sm bg-gradient-blue me-3 my-auto">
+                        <i class="material-symbols-rounded opacity-10 text-white">description</i>
+                      </div>
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="text-sm font-weight-normal mb-1">
+                          <span class="font-weight-bold">Nouveau devis</span> créé pour Transports Marseille Express
+                        </h6>
+                        <p class="text-xs text-secondary mb-0">
+                          <i class="fa fa-clock me-1"></i>
+                          Il y a 25 minutes
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <li class="mb-2">
+                  <a class="dropdown-item border-radius-md" href="javascript:;">
+                    <div class="d-flex py-1">
+                      <div class="avatar avatar-sm bg-gradient-primary me-3 my-auto">
+                        <i class="material-symbols-rounded opacity-10 text-white">thumb_up</i>
+                      </div>
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="text-sm font-weight-normal mb-1">
+                          <span class="font-weight-bold">Devis accepté</span> par Mairie de La Ciotat
+                        </h6>
+                        <p class="text-xs text-secondary mb-0">
+                          <i class="fa fa-clock me-1"></i>
+                          Il y a 2 heures
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item d-flex align-items-center">
+              <a href="../pages/profile.html" class="nav-link text-body font-weight-bold px-0">
+                <i class="material-symbols-rounded">account_circle</i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- End Navbar -->
+    <div class="container-fluid py-2">
+      <div class="row">
+        <div class="ms-3">
+          <h3 class="mb-0 h4 font-weight-bolder">Devis</h3>
+          <p class="mb-4">
+            Gérez vos propositions commerciales et suivez leur statut.
+          </p>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-header p-2 ps-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <p class="text-sm mb-0 text-capitalize">Total devis</p>
+                  <h4 class="mb-0">74</h4>
+                </div>
+                <div class="icon icon-md icon-shape bg-gradient-primary shadow text-center border-radius-lg">
+                  <i class="material-symbols-rounded opacity-10">description</i>
+                </div>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-2 ps-3">
+              <p class="mb-0 text-sm"><span class="text-success font-weight-bolder">+8% </span>ce mois-ci</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-header p-2 ps-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <p class="text-sm mb-0 text-capitalize">En attente</p>
+                  <h4 class="mb-0">23</h4>
+                </div>
+                <div class="icon icon-md icon-shape bg-gradient-blue shadow text-center border-radius-lg">
+                  <i class="material-symbols-rounded opacity-10">schedule</i>
+                </div>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-2 ps-3">
+              <p class="mb-0 text-sm"><span class="text-danger font-weight-bolder">+12% </span>vs dernier trimestre</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-header p-2 ps-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <p class="text-sm mb-0 text-capitalize">Taux de conversion</p>
+                  <h4 class="mb-0">65%</h4>
+                </div>
+                <div class="icon icon-md icon-shape bg-gradient-primary shadow text-center border-radius-lg">
+                  <i class="material-symbols-rounded opacity-10">analytics</i>
+                </div>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-2 ps-3">
+              <p class="mb-0 text-sm"><span class="text-success font-weight-bolder">+5% </span>vs année précédente</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+          <div class="card">
+            <div class="card-header p-2 ps-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <p class="text-sm mb-0 text-capitalize">Montant moyen</p>
+                  <h4 class="mb-0">7 250 €</h4>
+                </div>
+                <div class="icon icon-md icon-shape bg-gradient-blue shadow text-center border-radius-lg">
+                  <i class="material-symbols-rounded opacity-10">euro</i>
+                </div>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-2 ps-3">
+              <p class="mb-0 text-sm"><span class="text-success font-weight-bolder">+3% </span>cette semaine</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Filters -->
+      <div class="row mt-4">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-header p-3">
+              <div class="row">
+                <div class="col-md-6 d-flex align-items-center">
+                  <h6 class="mb-0">Filtres</h6>
+                </div>
+                <div class="col-md-6 text-end">
+                  <button class="btn btn-link text-dark mb-0 px-2">
+                    <i class="material-symbols-rounded opacity-5 me-1">refresh</i>Réinitialiser
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-lg-3 col-md-6 mb-md-0 mb-4">
+                  <div class="input-group input-group-static mb-4">
+                    <label>Statut</label>
+                    <select class="form-control">
+                      <option value="">Tous</option>
+                      <option value="en-cours">En cours</option>
+                      <option value="accepte">Accepté</option>
+                      <option value="refuse">Refusé</option>
+                      <option value="expire">Expiré</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-md-0 mb-4">
+                  <div class="input-group input-group-static mb-4">
+                    <label>Client</label>
+                    <select class="form-control">
+                      <option value="">Tous</option>
+                      <option value="cl-24589">Transports Marseille Express</option>
+                      <option value="cl-24590">Logistique Méditerranée</option>
+                      <option value="cl-24591">Mairie de La Ciotat</option>
+                      <option value="cl-24593">Constructions Méridionales</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-md-0 mb-4">
+                  <div class="input-group input-group-static mb-4">
+                    <label>Date de création</label>
+                    <select class="form-control">
+                      <option value="">Tous</option>
+                      <option value="semaine">Cette semaine</option>
+                      <option value="mois">Ce mois</option>
+                      <option value="trimestre">Ce trimestre</option>
+                      <option value="annee">Cette année</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-md-0 mb-4">
+                  <div class="input-group input-group-static mb-4">
+                    <label>Commercial</label>
+                    <select class="form-control">
+                      <option value="">Tous</option>
+                      <option value="user1">Jean Dupont</option>
+                      <option value="user2">Marie Lambert</option>
+                      <option value="user3">Karim Bensalem</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Devis Table -->
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header pb-0">
+              <div class="row">
+                <div class="col-lg-6 col-7">
+                  <h6>Liste des devis</h6>
+                  <p class="text-sm mb-0">
+                    <i class="fa fa-check text-info" aria-hidden="true"></i>
+                    <span class="font-weight-bold ms-1">12 nouveaux</span> devis ce mois-ci
+                  </p>
+                </div>
+                <div class="col-lg-6 col-5 my-auto text-end">
+                  <div class="dropdown float-lg-end pe-4">
+                    <a class="cursor-pointer" id="dropdownTable" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="fa fa-ellipsis-v text-secondary"></i>
+                    </a>
+                    <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
+                        <li><a class="dropdown-item border-radius-md" href="javascript:;">Exporter en CSV</a></li>
+                        <li><a class="dropdown-item border-radius-md" href="javascript:;">Exporter en PDF</a></li>
+                        <li><a class="dropdown-item border-radius-md" href="javascript:;">Imprimer la liste</a></li>
+                      </ul>
+                      </div>
+                      </div>
+                      </div>
+                      </div>
+                      <div class="card-body px-0 pb-2">
+                        <div class="table-responsive">
+                          <table class="table align-items-center mb-0">
+                            <thead>
+                              <tr>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Référence/Client</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Date</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Montant</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Statut</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Commercial</th>
+                                <th class="text-secondary opacity-7"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <!-- Row 1 -->
+                              <tr>
+                                <td>
+                                  <div class="d-flex px-2 py-1">
+                                    <div>
+                                      <i class="material-symbols-rounded opacity-6 me-3 my-auto">description</i>
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-center">
+                                      <h6 class="mb-0 text-sm">DEV-2425-001</h6>
+                                      <p class="text-xs text-secondary mb-0">Transports Marseille Express</p>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td>
+                                  <p class="text-xs font-weight-bold mb-0">12/04/2025</p>
+                                  <p class="text-xs text-secondary mb-0">Valide jusqu'au: 12/05/2025</p>
+                                </td>
+                                <td>
+                                  <p class="text-xs font-weight-bold mb-0">8 450,00 €</p>
+                                  <p class="text-xs text-secondary mb-0">HT: 7 041,67 €</p>
+                                </td>
+                                <td>
+                                  <span class="devis-tag en-cours">En cours</span>
+                                </td>
+                                <td>
+                                  <p class="text-xs font-weight-bold mb-0">Jean Dupont</p>
+                                </td>
+                                <td class="align-middle">
+                                  <div class="dropdown">
+                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-bs-toggle="dropdown" aria-expanded="false">
+                                      <i class="material-symbols-rounded">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownTable">
+                                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Voir</a></li>
+                                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Modifier</a></li>
+                                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Télécharger PDF</a></li>
+                                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Envoyer par email</a></li>
+                                      <li><hr class="dropdown-divider"></li>
+                                      <li><a class="dropdown-item border-radius-md text-success" href="javascript:;">Marquer comme accepté</a></li>
+                                      <li><a class="dropdown-item border-radius-md text-danger" href="javascript:;">Marquer comme refusé</a></li>
+                                    </ul>
+                                  </div>
+                                </td>
+                              </tr>
+                              
+                              <!-- Row 2 -->
+                              <tr>
+                                <td>
+                                  <div class="d-flex px-2 py-1">
+                                    <div>
+                                      <i class="material-symbols-rounded opacity-6 me-3 my-auto">description</i>
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-center">
+                                      <h6 class="mb-0 text-sm">DEV-2425-002</h6>
+                                      <p class="text-xs text-secondary mb-0">Mairie de La Ciotat</p>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td>
+                                  <p class="text-xs font-weight-bold mb-0">08/04/2025</p>
+                                  <p class="text-xs text-secondary mb-0">Valide jusqu'au: 08/05/2025</p>
+                                </td>
+                                <td>
+                                  <p class="text-xs font-weight-bold mb-0">12 850,00 €</p>
+                                  <p class="text-xs text-secondary mb-0">HT: 10 708,33 €</p>
+                                </td>
+                                <td>
+                                  <span class="devis-tag accepte">Accepté</span>
+                                </td>
+                                <td>
+                                  <p class="text-xs font-weight-bold mb-0">Marie Lambert</p>
+                                </td>
+                                <td class="align-middle">
+                                  <div class="dropdown">
+                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-bs-toggle="dropdown" aria-expanded="false">
+                                      <i class="material-symbols-rounded">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownTable">
+                                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Voir</a></li>
+                                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Télécharger PDF</a></li>
+                                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Créer contrat</a></li>
+                                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Créer facture</a></li>
+                                    </ul>
+                                  </div>
+                                </td>
+                              </tr>
+                              
+                              <!-- Row 3 -->
+                              <tr>
+                                <td>
+                                  <div class="d-flex px-2 py-1">
+                                    <div>
+                                      <i class="material-symbols-rounded opacity-6 me-3 my-auto">description</i>
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-center">
+                                      <h6 class="mb-0 text-sm">DEV-2425-003</h6>
+                                      <p class="text-xs text-secondary mb-0">Logistique Méditerranée</p>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td>
+                                  <p class="text-xs font-weight-bold mb-0">01/04/2025</p>
+                                  <p class="text-xs text-secondary mb-0">Valide jusqu'au: 01/05/2025</p>
+                                </td>
+                                <td>
+                                  <p class="text-xs font-weight-bold mb-0">5 320,00 €</p>
+                                  <p class="text-xs text-secondary mb-0">HT: 4 433,33 €</p>
+                                </td>
+                                <td>
+                                  <span class="devis-tag refuse">Refusé</span>
+                                </td>
+                                <td>
+                                  <p class="text-xs font-weight-bold mb-0">Karim Bensalem</p>
+                                </td>
+                                <td class="align-middle">
+                                  <div class="dropdown">
+                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-bs-toggle="dropdown" aria-expanded="false">
+                                      <i class="material-symbols-rounded">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownTable">
+                                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Voir</a></li>
+                                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Télécharger PDF</a></li>
+                                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Dupliquer</a></li>
+                                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Archiver</a></li>
+                                    </ul>
+                                  </div>
+                                </td>
+                              </tr>
+                              
+                              <!-- Row 4 -->
+                              <tr>
+                                <td>
+                                  <div class="d-flex px-2 py-1">
+                                    <div>
+                                      <i class="material-symbols-rounded opacity-6 me-3 my-auto">description</i>
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-center">
+                                      <h6 class="mb-0 text-sm">DEV-2425-004</h6>
+                                      <p class="text-xs text-secondary mb-0">Constructions Méridionales</p>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td>
+                                  <p class="text-xs font-weight-bold mb-0">25/03/2025</p>
+                                  <p class="text-xs text-secondary mb-0">Valide jusqu'au: 25/04/2025</p>
+                                </td>
+                                <td>
+                                  <p class="text-xs font-weight-bold mb-0">9 750,00 €</p>
+                                  <p class="text-xs text-secondary mb-0">HT: 8 125,00 €</p>
+                                </td>
+                                <td>
+                                  <span class="devis-tag en-cours">En cours</span>
+                                </td>
+                                <td>
+                                  <p class="text-xs font-weight-bold mb-0">Jean Dupont</p>
+                                </td>
+                                <td class="align-middle">
+                                  <div class="dropdown">
+                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-bs-toggle="dropdown" aria-expanded="false">
+                                      <i class="material-symbols-rounded">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownTable">
+                                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Voir</a></li>
+                                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Modifier</a></li>
+                                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Télécharger PDF</a></li>
+                                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Envoyer par email</a></li>
+                                      <li><hr class="dropdown-divider"></li>
+                                      <li><a class="dropdown-item border-radius-md text-success" href="javascript:;">Marquer comme accepté</a></li>
+                                      <li><a class="dropdown-item border-radius-md text-danger" href="javascript:;">Marquer comme refusé</a></li>
+                                    </ul>
+                                  </div>
+                                </td>
+                              </tr>
+                              
+                              <!-- Row 5 -->
+                              <tr>
+                                <td>
+                                  <div class="d-flex px-2 py-1">
+                                    <div>
+                                      <i class="material-symbols-rounded opacity-6 me-3 my-auto">description</i>
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-center">
+                                      <h6 class="mb-0 text-sm">DEV-2425-005</h6>
+                                      <p class="text-xs text-secondary mb-0">Transports Marseille Express</p>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td>
+                                  <p class="text-xs font-weight-bold mb-0">15/03/2025</p>
+                                  <p class="text-xs text-secondary mb-0">Valide jusqu'au: 15/04/2025</p>
+                                </td>
+                                <td>
+                                  <p class="text-xs font-weight-bold mb-0">4 250,00 €</p>
+                                  <p class="text-xs text-secondary mb-0">HT: 3 541,67 €</p>
+                                </td>
+                                <td>
+                                  <span class="devis-tag expire">Expiré</span>
+                                </td>
+                                <td>
+                                  <p class="text-xs font-weight-bold mb-0">Marie Lambert</p>
+                                </td>
+                                <td class="align-middle">
+                                  <div class="dropdown">
+                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-bs-toggle="dropdown" aria-expanded="false">
+                                      <i class="material-symbols-rounded">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownTable">
+                                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Voir</a></li>
+                                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Télécharger PDF</a></li>
+                                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Dupliquer</a></li>
+                                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Archiver</a></li>
+                                    </ul>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      </div>
+                      </div>
+                      </div>
+                      
+                      <!-- Pagination -->
+                      <div class="row">
+                        <div class="col-12">
+                          <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-end">
+                              <li class="page-item disabled">
+                                <a class="page-link" href="javascript:;" tabindex="-1">
+                                  <span class="material-symbols-rounded">keyboard_arrow_left</span>
+                                  <span class="sr-only">Previous</span>
+                                </a>
+                              </li>
+                              <li class="page-item active"><a class="page-link" href="javascript:;">1</a></li>
+                              <li class="page-item"><a class="page-link" href="javascript:;">2</a></li>
+                              <li class="page-item"><a class="page-link" href="javascript:;">3</a></li>
+                              <li class="page-item">
+                                <a class="page-link" href="javascript:;">
+                                  <span class="material-symbols-rounded">keyboard_arrow_right</span>
+                                  <span class="sr-only">Next</span>
+                                </a>
+                              </li>
+                            </ul>
+                          </nav>
+                        </div>
+                      </div>
+                      
+                      <!-- Footer -->
+                      <footer class="footer py-4">
+                        <div class="container-fluid">
+                          <div class="row align-items-center justify-content-lg-between">
+                            <div class="col-lg-6 mb-lg-0 mb-4">
+                              <div class="copyright text-center text-sm text-muted text-lg-start">
+                                © <script>
+                                  document.write(new Date().getFullYear())
+                                </script>,
+                                SEBUL Transport & Services
+                              </div>
+                            </div>
+                            <div class="col-lg-6">
+                              <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                                <li class="nav-item">
+                                  <a href="javascript:;" class="nav-link text-muted">Aide</a>
+                                </li>
+                                <li class="nav-item">
+                                  <a href="javascript:;" class="nav-link text-muted">Contact</a>
+                                </li>
+                                <li class="nav-item">
+                                  <a href="javascript:;" class="nav-link text-muted">À propos</a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </footer>
+                      </div>
+                      </main>
+                      
+                      <!-- Core JS Files -->
+                      <script src="../assets/js/core/popper.min.js"></script>
+                      <script src="../assets/js/core/bootstrap.min.js"></script>
+                      <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+                      <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+                      <script>
+                        var win = navigator.platform.indexOf('Win') > -1;
+                        if (win && document.querySelector('#sidenav-scrollbar')) {
+                          var options = {
+                            damping: '0.5'
+                          }
+                          Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+                        }
+                      </script>
+                      <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+                      <script src="../assets/js/material-dashboard.min.js?v=3.2.0"></script>
+                      </body>
+                      
+                      </html>

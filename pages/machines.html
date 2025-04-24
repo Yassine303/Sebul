@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <title>
+    SEBUL - Machines/Engins
+  </title>
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
+  <!-- Nucleo Icons -->
+  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <!-- Material Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="../assets/css/material-dashboard.css?v=3.2.0" rel="stylesheet" />
+  <style>
+    /* SEBUL Color Theme - Based on logo colors */
+    :root {
+      --sebul-red: #E63E3A;
+      --sebul-blue: #1B4695;
+      --sebul-light-blue: #3266CC;
+    }
+    
+    .bg-gradient-primary {
+      background-image: linear-gradient(195deg, var(--sebul-red), #cc2924) !important;
+    }
+    
+    .bg-gradient-blue {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .navbar-vertical.bg-white .navbar-nav .nav-link.active {
+      background-color: var(--sebul-red);
+      color: white;
+    }
+    
+    .bg-gradient-dark {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .btn.bg-gradient-dark {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .text-info {
+      color: var(--sebul-blue) !important;
+    }
+    
+    .bg-gradient-info {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .text-success {
+      color: var(--sebul-red) !important;
+    }
+    
+    .bg-gradient-success {
+      background-image: linear-gradient(195deg, var(--sebul-red), #cc2924) !important;
+    }
+    
+    .text-primary {
+      color: var(--sebul-red) !important;
+    }
+    
+    .btn-primary, .btn.bg-gradient-primary {
+      background-color: var(--sebul-red);
+      background-image: linear-gradient(195deg, var(--sebul-red), #cc2924);
+    }
+    
+    .btn-outline-primary {
+      color: var(--sebul-red);
+      border-color: var(--sebul-red);
+    }
+    
+    .btn-outline-primary:hover {
+      background-color: var(--sebul-red);
+      border-color: var(--sebul-red);
+    }
+    
+    .progress-bar.bg-gradient-info {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .bg-gradient-warning {
+      background-image: linear-gradient(195deg, var(--sebul-red), #cc2924) !important;
+    }
+    
+    .active-nav-link {
+      background-color: var(--sebul-red) !important;
+      color: white !important;
+      box-shadow: 0 4px 6px -1px rgba(230, 62, 58, 0.15), 0 2px 4px -1px rgba(230, 62, 58, 0.06);
+    }
+    
+    .status-available {
+      color: #4CAF50;
+    }
+    
+    .status-in-use {
+      color: #FF9800;
+    }
+    
+    .status-maintenance {
+      color: #F44336;
+    }
+    
+    .status-reserved {
+      color: #9C27B0;
+    }
+    
+    .badge-status {
+      padding: 5px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+    
+    .badge-available {
+      background-color: rgba(76, 175, 80, 0.1);
+      color: #4CAF50;
+      border: 1px solid #4CAF50;
+    }
+    
+    .badge-in-use {
+      background-color: rgba(255, 152, 0, 0.1);
+      color: #FF9800;
+      border: 1px solid #FF9800;
+    }
+    
+    .badge-maintenance {
+      background-color: rgba(244, 67, 54, 0.1);
+      color: #F44336;
+      border: 1px solid #F44336;
+    }
+    
+    .badge-reserved {
+      background-color: rgba(156, 39, 176, 0.1);
+      color: #9C27B0;
+      border: 1px solid #9C27B0;
+    }
+    
+    .machines-table th,
+    .machines-table td {
+      vertical-align: middle;
+    }
+    
+    .filters-card {
+      margin-bottom: 1.5rem;
+    }
+    
+    .machine-avatar {
+      height: 40px;
+      width: 40px;
+      border-radius: 0.375rem;
+      object-fit: cover;
+    }
+  </style>
+</head>
+
+<body class="g-sidenav-show bg-gray-100">
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2 bg-white my-2" id="sidenav-main">
+    <div class="sidenav-header">
+      <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+      <img src="../assets/img/logo (1).png" height="105px" hspace="20">
+    </div>
+    <hr class="horizontal dark mt-0 mb-2">
+    <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="../pages/dashboard.html">
+            <i class="material-symbols-rounded opacity-5">dashboard</i>
+            <span class="nav-link-text ms-1">Dashboard</span>
+          </a>
+        </li>
+  
+        <!-- 1. Gestion commerciale -->
+        <li class="nav-item">
+          <a data-bs-toggle="collapse" href="#gestionCommercialePages" class="nav-link text-dark" aria-controls="gestionCommercialePages" role="button" aria-expanded="false">
+            <i class="material-symbols-rounded opacity-5">store</i>
+            <span class="nav-link-text ms-1">Gestion commerciale</span>
+            <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+          </a>
+          <div class="collapse" id="gestionCommercialePages">
+            <ul class="nav ms-4">
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/clients.html">
+                  <span class="nav-link-text ms-1">Clients</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/billing.html">
+                  <span class="nav-link-text ms-1">Devis</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/virtual-reality.html">
+                  <span class="nav-link-text ms-1">Contrats</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/rtl.html">
+                  <span class="nav-link-text ms-1">Factures</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/notifications.html">
+                  <span class="nav-link-text ms-1">Bons de Livraison (BL)</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+  
+        <!-- 2. Parc et Achats -->
+        <li class="nav-item">
+          <a data-bs-toggle="collapse" href="#parcAchatsPages" class="nav-link text-dark" aria-controls="parcAchatsPages" role="button" aria-expanded="true">
+            <i class="material-symbols-rounded opacity-5">build</i>
+            <span class="nav-link-text ms-1">Parc & Achats</span>
+            <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+          </a>
+          <div class="collapse show" id="parcAchatsPages">
+            <ul class="nav ms-4">
+              <li class="nav-item">
+                <a class="nav-link active-nav-link" href="../pages/machines.html">
+                  <span class="nav-link-text ms-1">Machines/Engins</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/fournisseurs.html">
+                  <span class="nav-link-text ms-1">Fournisseurs</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/commandes.html">
+                  <span class="nav-link-text ms-1">Commandes fournisseurs</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/bons-commande.html">
+                  <span class="nav-link-text ms-1">Bons de commande</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+  
+        <!-- 3. Transport et Services -->
+        <li class="nav-item">
+          <a data-bs-toggle="collapse" href="#transportServicesPages" class="nav-link text-dark" aria-controls="transportServicesPages" role="button" aria-expanded="false">
+            <i class="material-symbols-rounded opacity-5">local_shipping</i>
+            <span class="nav-link-text ms-1">Transport & Services</span>
+            <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+          </a>
+          <div class="collapse" id="transportServicesPages">
+            <ul class="nav ms-4">
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/missions.html">
+                  <span class="nav-link-text ms-1">Missions de transport</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/factures-transitaire.html">
+                  <span class="nav-link-text ms-1">Factures transitaire</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/produits-services.html">
+                  <span class="nav-link-text ms-1">Produits/Services</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+  
+        <!-- 4. Finances -->
+        <li class="nav-item">
+          <a data-bs-toggle="collapse" href="#financesPages" class="nav-link text-dark" aria-controls="financesPages" role="button" aria-expanded="false">
+            <i class="material-symbols-rounded opacity-5">account_balance</i>
+            <span class="nav-link-text ms-1">Finances</span>
+            <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+          </a>
+          <div class="collapse" id="financesPages">
+            <ul class="nav ms-4">
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/charges.html">
+                  <span class="nav-link-text ms-1">Charges</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/paiements.html">
+                  <span class="nav-link-text ms-1">Paiements</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/rapports.html">
+                  <span class="nav-link-text ms-1">Rapports & Statistiques</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+  
+        <!-- 5. Administration -->
+        <li class="nav-item">
+          <a data-bs-toggle="collapse" href="#administrationPages" class="nav-link text-dark" aria-controls="administrationPages" role="button" aria-expanded="false">
+            <i class="material-symbols-rounded opacity-5">admin_panel_settings</i>
+            <span class="nav-link-text ms-1">Administration</span>
+            <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+          </a>
+          <div class="collapse" id="administrationPages">
+            <ul class="nav ms-4">
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/utilisateurs.html">
+                  <span class="nav-link-text ms-1">Utilisateurs & rôles</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/parametres.html">
+                  <span class="nav-link-text ms-1">Paramètres</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/taxes.html">
+                  <span class="nav-link-text ms-1">TVA & taxes</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+  
+        <li class="nav-item mt-3">
+          <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-5">Account pages</h6>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="../pages/profile.html">
+            <i class="material-symbols-rounded opacity-5">person</i>
+            <span class="nav-link-text ms-1">Profile</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="../pages/sign-in.html">
+            <i class="material-symbols-rounded opacity-5">login</i>
+            <span class="nav-link-text ms-1">Sign In</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="../pages/sign-up.html">
+            <i class="material-symbols-rounded opacity-5">assignment</i>
+            <span class="nav-link-text ms-1">Sign Up</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="sidenav-footer position-absolute w-100 bottom-0">
+      <div class="mx-3">
+        
+      </div>
+    </div>
+  </aside>
+  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
+    <!-- Navbar -->
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-3 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
+      <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Parc & Achats</a></li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Machines/Engins</li>
+          </ol>
+        </nav>
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+            <div class="input-group input-group-outline">
+              <label class="form-label">Rechercher...</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+          <ul class="navbar-nav d-flex align-items-center justify-content-end">
+            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                <div class="sidenav-toggler-inner">
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                </div>
+              </a>
+            </li>
+            <li class="nav-item px-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0">
+                <i class="material-symbols-rounded fixed-plugin-button-nav">settings</i>
+              </a>
+            </li>
+            <li class="nav-item dropdown pe-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="material-symbols-rounded">notifications</i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                <li class="mb-2">
+                  <a class="dropdown-item border-radius-md" href="javascript:;">
+                    <div class="d-flex py-1">
+                      <div class="my-auto">
+                        <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3">
+                      </div>
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="text-sm font-weight-normal mb-1">
+                          <span class="font-weight-bold">Maintenance planifiée</span> pour Bulldozer CAT D8
+                        </h6>
+                        <p class="text-xs text-secondary mb-0">
+                          <i class="fa fa-clock me-1"></i>
+                          Demain à 9h00
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <li class="mb-2">
+                  <a class="dropdown-item border-radius-md" href="javascript:;">
+                    <div class="d-flex py-1">
+                      <div class="my-auto">
+                        <img src="../assets/img/small-logos/logo-spotify.svg" class="avatar avatar-sm bg-gradient-blue me-3">
+                      </div>
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="text-sm font-weight-normal mb-1">
+                          <span class="font-weight-bold">Contrat de location</span> expire dans 3 jours
+                        </h6>
+                        <p class="text-xs text-secondary mb-0">
+                          <i class="fa fa-clock me-1"></i>
+                          Grue mobile Liebherr LTM
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item border-radius-md" href="javascript:;">
+                    <div class="d-flex py-1">
+                      <div class="avatar avatar-sm bg-gradient-blue me-3 my-auto">
+                        <i class="material-symbols-rounded">build</i>
+                      </div>
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="text-sm font-weight-normal mb-1">
+                          Pièces de rechange livrées
+                        </h6>
+                        <p class="text-xs text-secondary mb-0">
+                          <i class="fa fa-clock me-1"></i>
+                          Hier à 14h30
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item d-flex align-items-center">
+              <a href="../pages/profile.html" class="nav-link text-body font-weight-bold px-0">
+                <i class="material-symbols-rounded">account_circle</i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- End Navbar -->
+    <div class="container-fluid py-2">
+      <!-- Header -->
+      <div class="row mb-4">
+        <div class="col-lg-8 col-md-8">
+          <h3 class="mb-0 h4 font-weight-bolder">Gestion des Machines et Engins</h3>
+          <p class="mb-2">
+            Gérez votre parc de machines, leur statut, maintenance et historique d'utilisation.
+          </p>
+        </div>
+        <div class="col-lg-4 col-md-4 d-flex justify-content-end align-items-center">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMachineModal">
+            <i class="material-symbols-rounded opacity-10 me-1">add</i>
+            Ajouter une machine
+          </button>
+        </div>
+      </div>
+
+      <!-- Résumé du parc -->
+      <div class="row">
+        <div class="col-xl-3 col-sm-6 mb-xl-3 mb-4">
+          <div class="card">
+            <div class="card-header p-2 ps-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <p class="text-sm mb-0 text-capitalize">Total des machines</p>
+                  <h4 class="mb-0">45</h4>
+                </div>
+                <div class="icon icon-md icon-shape bg-gradient-primary shadow text-center border-radius-lg">
+                  <i class="material-symbols-rounded opacity-10">precision_manufacturing</i>
+                </div>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-2 ps-3">
+              <p class="mb-0 text-sm"><span class="text-success font-weight-bolder">+2 </span>depuis le mois dernier</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-3 mb-4">
+          <div class="card">
+            <div class="card-header p-2 ps-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <p class="text-sm mb-0 text-capitalize">Machines en service</p>
+                  <h4 class="mb-0">28</h4>
+                </div>
+                <div class="icon icon-md icon-shape bg-gradient-warning shadow text-center border-radius-lg">
+                  <i class="material-symbols-rounded opacity-10">engineering</i>
+                </div>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-2 ps-3">
+              <p class="mb-0 text-sm"><span class="text-success font-weight-bolder">62% </span>du parc</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-3 mb-4">
+          <div class="card">
+            <div class="card-header p-2 ps-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <p class="text-sm mb-0 text-capitalize">En maintenance</p>
+                  <h4 class="mb-0">7</h4>
+                </div>
+                <div class="icon icon-md icon-shape bg-gradient-blue shadow text-center border-radius-lg">
+                  <i class="material-symbols-rounded opacity-10">build</i>
+                </div>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-2 ps-3">
+              <p class="mb-0 text-sm"><span class="text-danger font-weight-bolder">+2 </span>depuis la semaine dernière</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-3 mb-4">
+          <div class="card">
+            <div class="card-header p-2 ps-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <p class="text-sm mb-0 text-capitalize">Disponibles</p>
+                  <h4 class="mb-0">10</h4>
+                </div>
+                <div class="icon icon-md icon-shape bg-gradient-success shadow text-center border-radius-lg">
+                  <i class="material-symbols-rounded opacity-10">check_circle</i>
+                </div>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-2 ps-3">
+              <p class="mb-0 text-sm"><span class="text-success font-weight-bolder">22% </span>du parc</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filtres -->
+      <div class="row">
+        <div class="col-12">
+          <div class="card filters-card">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-md-3 col-sm-6 mb-2">
+                  <label class="form-label">Catégorie</label>
+                  <select class="form-control">
+                    <option value="">Toutes les catégories</option>
+                    <option value="1">Engins de terrassement</option>
+                    <option value="2">Grues</option>
+                    <option value="3">Véhicules de transport</option>
+                    <option value="4">Équipements de compactage</option>
+                    <option value="5">Équipements de forage</option>
+                  </select>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-2">
+                  <label class="form-label">Statut</label>
+                  <select class="form-control">
+                    <option value="">Tous les statuts</option>
+                    <option value="available">Disponible</option>
+                    <option value="in-use">En service</option>
+                    <option value="maintenance">En maintenance</option>
+                    <option value="reserved">Réservé</option>
+                  </select>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-2">
+                  <label class="form-label">Fournisseur</label>
+                  <select class="form-control">
+                    <option value="">Tous les fournisseurs</option>
+                    <option value="1">Caterpillar</option>
+                    <option value="2">Liebherr</option>
+                    <option value="3">Volvo Construction</option>
+                    <option value="4">Komatsu</option>
+                    <option value="5">Hitachi</option>
+                  </select>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-2">
+                  <label class="form-label">Site</label>
+                  <select class="form-control">
+                    <option value="">Tous les sites</option>
+                    <option value="1">Chantier A</option>
+                    <option value="2">Chantier B</option>
+                    <option value="3">Dépôt central</option>
+                    <option value="4">Site de maintenance</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col-12 d-flex justify-content-end">
+                  <button class="btn btn-outline-primary me-2">Réinitialiser</button>
+                  <button class="btn btn-primary">Filtrer</button>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Liste des machines -->
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header pb-0">
+            <div class="d-flex justify-content-between">
+              <h5 class="mb-0">Liste des machines et engins</h5>
+              <div>
+                <button class="btn btn-sm btn-outline-primary me-2">
+                  <i class="material-symbols-rounded">file_download</i> Exporter
+                </button>
+                <button class="btn btn-sm btn-outline-primary">
+                  <i class="material-symbols-rounded">print</i> Imprimer
+                </button>
+              </div>
+            </div>
+            <p class="text-sm mb-0">
+              Liste complète des machines et engins avec leur statut et information.
+            </p>
+          </div>
+          <div class="card-body px-0 pb-2">
+            <div class="table-responsive p-0">
+              <table class="table align-items-center mb-0 machines-table">
+                <thead>
+                  <tr>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Machine/Engin</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Catégorie</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Numéro de série</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Statut</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Site actuel</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Prochaine maintenance</th>
+                    <th class="text-secondary opacity-7"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Machine 1 -->
+                  <tr>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div>
+                          <img src="../assets/img/image.png" class="machine-avatar me-3" alt="Bulldozer">
+                        </div>
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">Bulldozer CAT D8</h6>
+                          <p class="text-xs text-secondary mb-0">CAT-BZ-20240358</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0">Engin de terrassement</p>
+                    </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0">SN-45278963</p>
+                    </td>
+                    <td class="align-middle text-center text-sm">
+                      <span class="badge-status badge-in-use">En service</span>
+                    </td>
+                    <td class="align-middle text-center">
+                      <span class="text-secondary text-xs font-weight-bold">Chantier A</span>
+                    </td>
+                    <td class="align-middle text-center">
+                      <span class="text-secondary text-xs font-weight-bold">28 Avril 2025</span>
+                    </td>
+                    <td class="align-middle">
+                      <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Voir détails">
+                        <i class="material-symbols-rounded text-info">visibility</i>
+                      </a>
+                      <a href="javascript:;" class="text-secondary font-weight-bold text-xs ms-2" data-toggle="tooltip" data-original-title="Modifier">
+                        <i class="material-symbols-rounded text-warning">edit</i>
+                      </a>
+                    </td>
+                  </tr>
+                  
+                  <!-- Machine 2 -->
+                  <tr>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div>
+                          <img src="../assets/img/machine-crane.jpg" class="machine-avatar me-3" alt="Grue">
+                        </div>
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">Grue mobile Liebherr LTM</h6>
+                          <p class="text-xs text-secondary mb-0">LIE-GR-20231025</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0">Grue</p>
+                    </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0">SN-98723654</p>
+                    </td>
+                    <td class="align-middle text-center text-sm">
+                      <span class="badge-status badge-reserved">Réservé</span>
+                    </td>
+                    <td class="align-middle text-center">
+                      <span class="text-secondary text-xs font-weight-bold">Dépôt central</span>
+                    </td>
+                    <td class="align-middle text-center">
+                      <span class="text-secondary text-xs font-weight-bold">15 Mai 2025</span>
+                    </td>
+                    <td class="align-middle">
+                      <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Voir détails">
+                        <i class="material-symbols-rounded text-info">visibility</i>
+                      </a>
+                      <a href="javascript:;" class="text-secondary font-weight-bold text-xs ms-2" data-toggle="tooltip" data-original-title="Modifier">
+                        <i class="material-symbols-rounded text-warning">edit</i>
+                      </a>
+                    </td>
+                  </tr>
+
+                  <!-- Machine 3 -->
+                  <tr>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div>
+                          <img src="../assets/img/machine-excavator.jpg" class="machine-avatar me-3" alt="Pelle">
+                        </div>
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">Pelle hydraulique Volvo EC380</h6>
+                          <p class="text-xs text-secondary mb-0">VOL-PH-20210569</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0">Engin de terrassement</p>
+                    </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0">SN-74125896</p>
+                    </td>
+                    <td class="align-middle text-center text-sm">
+                      <span class="badge-status badge-maintenance">En maintenance</span>
+                    </td>
+                    <td class="align-middle text-center">
+                      <span class="text-secondary text-xs font-weight-bold">Site de maintenance</span>
+                    </td>
+                    <td class="align-middle text-center">
+                      <span class="text-secondary text-xs font-weight-bold">En cours</span>
+                    </td>
+                    <td class="align-middle">
+                      <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Voir détails">
+                        <i class="material-symbols-rounded text-info">visibility</i>
+                      </a>
+                      <a href="javascript:;" class="text-secondary font-weight-bold text-xs ms-2" data-toggle="tooltip" data-original-title="Modifier">
+                        <i class="material-symbols-rounded text-warning">edit</i>
+                      </a>
+                    </td>
+                  </tr>
+
+                  <!-- Machine 4 -->
+                  <tr>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div>
+                          <img src="../assets/img/machine-truck.jpg" class="machine-avatar me-3" alt="Camion">
+                        </div>
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">Camion benne Scania R500</h6>
+                          <p class="text-xs text-secondary mb-0">SCA-CB-20230786</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0">Véhicule de transport</p>
+                    </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0">SN-36987412</p>
+                    </td>
+                    <td class="align-middle text-center text-sm">
+                      <span class="badge-status badge-available">Disponible</span>
+                    </td>
+                    <td class="align-middle text-center">
+                      <span class="text-secondary text-xs font-weight-bold">Dépôt central</span>
+                    </td>
+                    <td class="align-middle text-center">
+                      <span class="text-secondary text-xs font-weight-bold">12 Juin 2025</span>
+                    </td>
+                    <td class="align-middle">
+                      <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Voir détails">
+                        <i class="material-symbols-rounded text-info">visibility</i>
+                      </a>
+                      <a href="javascript:;" class="text-secondary font-weight-bold text-xs ms-2" data-toggle="tooltip" data-original-title="Modifier">
+                        <i class="material-symbols-rounded text-warning">edit</i>
+                      </a>
+                    </td>
+                  </tr>
+
+                  <!-- Machine 5 -->
+                  <tr>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div>
+                          <img src="../assets/img/machine-roller.jpg" class="machine-avatar me-3" alt="Compacteur">
+                        </div>
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">Compacteur Bomag BW213</h6>
+                          <p class="text-xs text-secondary mb-0">BOM-CO-20220423</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0">Équipement de compactage</p>
+                    </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0">SN-58743269</p>
+                    </td>
+                    <td class="align-middle text-center text-sm">
+                      <span class="badge-status badge-in-use">En service</span>
+                    </td>
+                    <td class="align-middle text-center">
+                      <span class="text-secondary text-xs font-weight-bold">Chantier B</span>
+                    </td>
+                    <td class="align-middle text-center">
+                      <span class="text-secondary text-xs font-weight-bold">3 Mai 2025</span>
+                    </td>
+                    <td class="align-middle">
+                      <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Voir détails">
+                        <i class="material-symbols-rounded text-info">visibility</i>
+                      </a>
+                      <a href="javascript:;" class="text-secondary font-weight-bold text-xs ms-2" data-toggle="tooltip" data-original-title="Modifier">
+                        <i class="material-symbols-rounded text-warning">edit</i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer">
+            <nav aria-label="Page navigation">
+              <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                  <a class="page-link" href="#" tabindex="-1">
+                    <span class="material-symbols-rounded">keyboard_arrow_left</span>
+                  </a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                  <a class="page-link" href="#">
+                    <span class="material-symbols-rounded">keyboard_arrow_right</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal pour ajouter une machine -->
+    <div class="modal fade" id="addMachineModal" tabindex="-1" role="dialog" aria-labelledby="addMachineModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addMachineModalLabel">Ajouter une nouvelle machine</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="input-group input-group-outline my-3">
+                    <label class="form-label">Nom de la machine</label>
+                    <input type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group input-group-outline my-3">
+                    <label class="form-label">Référence interne</label>
+                    <input type="text" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="input-group input-group-outline my-3">
+                    <select class="form-control" required>
+                      <option selected disabled>Catégorie</option>
+                      <option value="1">Engins de terrassement</option>
+                      <option value="2">Grues</option>
+                      <option value="3">Véhicules de transport</option>
+                      <option value="4">Équipements de compactage</option>
+                      <option value="5">Équipements de forage</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group input-group-outline my-3">
+                    <select class="form-control" required>
+                      <option selected disabled>Fournisseur</option>
+                      <option value="1">Caterpillar</option>
+                      <option value="2">Liebherr</option>
+                      <option value="3">Volvo Construction</option>
+                      <option value="4">Komatsu</option>
+                      <option value="5">Hitachi</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="input-group input-group-outline my-3">
+                    <label class="form-label">Numéro de série</label>
+                    <input type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group input-group-outline my-3">
+                    <label class="form-label">Année de fabrication</label>
+                    <input type="number" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="input-group input-group-outline my-3">
+                    <label class="form-label">Date d'acquisition</label>
+                    <input type="date" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group input-group-outline my-3">
+                    <label class="form-label">Valeur d'achat (DH)</label>
+                    <input type="number" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="input-group input-group-outline my-3">
+                    <select class="form-control" required>
+                      <option selected disabled>Statut initial</option>
+                      <option value="available">Disponible</option>
+                      <option value="in-use">En service</option>
+                      <option value="maintenance">En maintenance</option>
+                      <option value="reserved">Réservé</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group input-group-outline my-3">
+                    <select class="form-control" required>
+                      <option selected disabled>Site actuel</option>
+                      <option value="1">Chantier A</option>
+                      <option value="2">Chantier B</option>
+                      <option value="3">Dépôt central</option>
+                      <option value="4">Site de maintenance</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="input-group input-group-outline my-3">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" rows="4"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-check form-switch d-flex align-items-center mb-3">
+                    <input class="form-check-input" type="checkbox" id="requiresMaintenance">
+                    <label class="form-check-label mb-0 ms-2" for="requiresMaintenance">Programme de maintenance requis</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row" id="maintenanceSection" style="display: none;">
+                <div class="col-md-6">
+                  <div class="input-group input-group-outline my-3">
+                    <label class="form-label">Intervalle de maintenance (heures)</label>
+                    <input type="number" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group input-group-outline my-3">
+                    <label class="form-label">Prochaine maintenance</label>
+                    <input type="date" class="form-control">
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Annuler</button>
+            <button type="button" class="btn btn-primary">Enregistrer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer py-4">
+      <div class="container-fluid">
+        <div class="row align-items-center justify-content-lg-between">
+          <div class="col-lg-6 mb-lg-0 mb-4">
+            <div class="copyright text-center text-sm text-muted text-lg-start">
+              © 2025,
+              SEBUL - Système de gestion
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</main>
+
+<!-- Core JS Files -->
+<script src="../assets/js/core/popper.min.js"></script>
+<script src="../assets/js/core/bootstrap.min.js"></script>
+<script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+<script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+<script>
+  var win = navigator.platform.indexOf('Win') > -1;
+  if (win && document.querySelector('#sidenav-scrollbar')) {
+    var options = {
+      damping: '0.5'
+    }
+    Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+  }
+  
+  // Show/hide maintenance section based on checkbox
+  document.getElementById('requiresMaintenance').addEventListener('change', function() {
+    document.getElementById('maintenanceSection').style.display = this.checked ? 'flex' : 'none';
+  });
+</script>
+<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+<script src="../assets/js/material-dashboard.min.js?v=3.2.0"></script>
+</body>
+
+</html>

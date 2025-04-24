@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <title>
+    SEBUL - Gestion des Contrats
+  </title>
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
+  <!-- Nucleo Icons -->
+  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <!-- Material Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="../assets/css/material-dashboard.css?v=3.2.0" rel="stylesheet" />
+  <style>
+    /* SEBUL Color Theme - Based on logo colors */
+    :root {
+      --sebul-red: #E63E3A;
+      --sebul-blue: #1B4695;
+      --sebul-light-blue: #3266CC;
+    }
+    
+    .bg-gradient-primary {
+      background-image: linear-gradient(195deg, var(--sebul-red), #cc2924) !important;
+    }
+    
+    .bg-gradient-blue {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .navbar-vertical.bg-white .navbar-nav .nav-link.active {
+      background-color: var(--sebul-red);
+      color: white;
+    }
+    
+    .bg-gradient-dark {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .btn.bg-gradient-dark {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .text-info {
+      color: var(--sebul-blue) !important;
+    }
+    
+    .bg-gradient-info {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .text-success {
+      color: var(--sebul-red) !important;
+    }
+    
+    .bg-gradient-success {
+      background-image: linear-gradient(195deg, var(--sebul-red), #cc2924) !important;
+    }
+    
+    .text-primary {
+      color: var(--sebul-red) !important;
+    }
+    
+    .btn-primary, .btn.bg-gradient-primary {
+      background-color: var(--sebul-red);
+      background-image: linear-gradient(195deg, var(--sebul-red), #cc2924);
+    }
+    
+    .btn-outline-primary {
+      color: var(--sebul-red);
+      border-color: var(--sebul-red);
+    }
+    
+    .btn-outline-primary:hover {
+      background-color: var(--sebul-red);
+      border-color: var(--sebul-red);
+    }
+    
+    .progress-bar.bg-gradient-info {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .bg-gradient-warning {
+      background-image: linear-gradient(195deg, var(--sebul-red), #cc2924) !important;
+    }
+    
+    .active-nav-link {
+      background-color: var(--sebul-red) !important;
+      color: white !important;
+      box-shadow: 0 4px 6px -1px rgba(230, 62, 58, 0.15), 0 2px 4px -1px rgba(230, 62, 58, 0.06);
+    }
+
+    /* Badges couleurs pour les statuts de contrat */
+    .badge-active {
+      background-color: #82d616;
+      color: white;
+    }
+    
+    .badge-pending {
+      background-color: #fbcf33;
+      color: #344767;
+    }
+    
+    .badge-expired {
+      background-color: #ea0606;
+      color: white;
+    }
+    
+    .badge-draft {
+      background-color: #627594;
+      color: white;
+    }
+
+    /* Styles additionnels pour la page contrats */
+    .form-check-input:checked {
+      background-color: var(--sebul-red);
+      border-color: var(--sebul-red);
+    }
+    
+    .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+      background-color: var(--sebul-red);
+    }
+
+    /* Style pour le bouton d'ajout de contrat */
+    .btn-add-contract {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(230, 62, 58, 0.4);
+      z-index: 9;
+    }
+
+    .btn-add-contract i {
+      font-size: 24px;
+    }
+  </style>
+</head>
+
+<body class="g-sidenav-show bg-gray-100">
+    <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2 bg-white my-2" id="sidenav-main">
+        <div class="sidenav-header">
+          <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+          <img src="../assets/img/logo (1).png" height="105px" hspace="20">
+        </div>
+        <hr class="horizontal dark mt-0 mb-2">
+        <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="../pages/dashboard.html">
+                <i class="material-symbols-rounded opacity-5">dashboard</i>
+                <span class="nav-link-text ms-1">Dashboard</span>
+              </a>
+            </li>
+      
+            <!-- 1. Gestion commerciale -->
+            <li class="nav-item">
+              <a data-bs-toggle="collapse" href="#gestionCommercialePages" class="nav-link text-dark" aria-controls="gestionCommercialePages" role="button" aria-expanded="true">
+                <i class="material-symbols-rounded opacity-5">store</i>
+                <span class="nav-link-text ms-1">Gestion commerciale</span>
+                <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+              </a>
+              <div class="collapse show" id="gestionCommercialePages">
+                <ul class="nav ms-4">
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/clients.html">
+                      <span class="nav-link-text ms-1">Clients</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/devis.html">
+                      <span class="nav-link-text ms-1">Devis</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active-nav-link" href="../pages/contrats.html">
+                      <span class="nav-link-text ms-1">Contrats</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/factures.html">
+                      <span class="nav-link-text ms-1">Factures</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/bons-livraison.html">
+                      <span class="nav-link-text ms-1">Bons de Livraison (BL)</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+      
+            <!-- 2. Parc et Achats -->
+            <li class="nav-item">
+              <a data-bs-toggle="collapse" href="#parcAchatsPages" class="nav-link text-dark" aria-controls="parcAchatsPages" role="button" aria-expanded="false">
+                <i class="material-symbols-rounded opacity-5">build</i>
+                <span class="nav-link-text ms-1">Parc & Achats</span>
+                <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+              </a>
+              <div class="collapse" id="parcAchatsPages">
+                <ul class="nav ms-4">
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/machines.html">
+                      <span class="nav-link-text ms-1">Machines/Engins</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/fournisseurs.html">
+                      <span class="nav-link-text ms-1">Fournisseurs</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/commandes.html">
+                      <span class="nav-link-text ms-1">Commandes fournisseurs</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/bons-commande.html">
+                      <span class="nav-link-text ms-1">Bons de commande</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+      
+            <!-- 3. Transport et Services -->
+            <li class="nav-item">
+              <a data-bs-toggle="collapse" href="#transportServicesPages" class="nav-link text-dark" aria-controls="transportServicesPages" role="button" aria-expanded="false">
+                <i class="material-symbols-rounded opacity-5">local_shipping</i>
+                <span class="nav-link-text ms-1">Transport & Services</span>
+                <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+              </a>
+              <div class="collapse" id="transportServicesPages">
+                <ul class="nav ms-4">
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/missions.html">
+                      <span class="nav-link-text ms-1">Missions de transport</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/factures-transitaire.html">
+                      <span class="nav-link-text ms-1">Factures transitaire</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/produits-services.html">
+                      <span class="nav-link-text ms-1">Produits/Services</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+      
+            <!-- 4. Finances -->
+            <li class="nav-item">
+              <a data-bs-toggle="collapse" href="#financesPages" class="nav-link text-dark" aria-controls="financesPages" role="button" aria-expanded="false">
+                <i class="material-symbols-rounded opacity-5">account_balance</i>
+                <span class="nav-link-text ms-1">Finances</span>
+                <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+              </a>
+              <div class="collapse" id="financesPages">
+                <ul class="nav ms-4">
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/charges.html">
+                      <span class="nav-link-text ms-1">Charges</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/paiements.html">
+                      <span class="nav-link-text ms-1">Paiements</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/rapports.html">
+                      <span class="nav-link-text ms-1">Rapports & Statistiques</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+      
+            <!-- 5. Administration -->
+            <li class="nav-item">
+              <a data-bs-toggle="collapse" href="#administrationPages" class="nav-link text-dark" aria-controls="administrationPages" role="button" aria-expanded="false">
+                <i class="material-symbols-rounded opacity-5">admin_panel_settings</i>
+                <span class="nav-link-text ms-1">Administration</span>
+                <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+              </a>
+              <div class="collapse" id="administrationPages">
+                <ul class="nav ms-4">
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/utilisateurs.html">
+                      <span class="nav-link-text ms-1">Utilisateurs & rôles</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/parametres.html">
+                      <span class="nav-link-text ms-1">Paramètres</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark" href="../pages/taxes.html">
+                      <span class="nav-link-text ms-1">TVA & taxes</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+      
+            <li class="nav-item mt-3">
+              <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-5">Account pages</h6>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="../pages/profile.html">
+                <i class="material-symbols-rounded opacity-5">person</i>
+                <span class="nav-link-text ms-1">Profile</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="../pages/sign-in.html">
+                <i class="material-symbols-rounded opacity-5">login</i>
+                <span class="nav-link-text ms-1">Sign In</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="../pages/sign-up.html">
+                <i class="material-symbols-rounded opacity-5">assignment</i>
+                <span class="nav-link-text ms-1">Sign Up</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="sidenav-footer position-absolute w-100 bottom-0">
+          <div class="mx-3">
+            
+          </div>
+        </div>
+      </aside>
+  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
+    <!-- Navbar -->
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-3 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
+      <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Gestion commerciale</a></li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Contrats</li>
+          </ol>
+        </nav>
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+            <div class="input-group input-group-outline">
+              <label class="form-label">Rechercher...</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+          <ul class="navbar-nav d-flex align-items-center justify-content-end">
+            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                <div class="sidenav-toggler-inner">
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                </div>
+              </a>
+            </li>
+            <li class="nav-item px-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0">
+                <i class="material-symbols-rounded fixed-plugin-button-nav">settings</i>
+              </a>
+            </li>
+            <li class="nav-item dropdown pe-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="material-symbols-rounded">notifications</i>
+                <span class="position-absolute top-5 start-100 translate-middle badge rounded-pill bg-danger border border-white small py-1 px-2">
+                  <span class="small">3</span>
+                  <span class="visually-hidden">notifications non lues</span>
+                </span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                <li class="mb-2">
+                  <a class="dropdown-item border-radius-md" href="javascript:;">
+                    <div class="d-flex py-1">
+                      <div class="avatar avatar-sm bg-gradient-primary me-3 my-auto">
+                        <i class="material-symbols-rounded opacity-10">description</i>
+                      </div>
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="text-sm font-weight-normal mb-1">
+                          <span class="font-weight-bold">Contrat #2301</span> expire dans 7 jours
+                        </h6>
+                        <p class="text-xs text-secondary mb-0">
+                          <i class="fa fa-clock me-1"></i>
+                          Il y a 1 jour
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <li class="mb-2">
+                  <a class="dropdown-item border-radius-md" href="javascript:;">
+                    <div class="d-flex py-1">
+                      <div class="avatar avatar-sm bg-gradient-blue me-3 my-auto">
+                        <i class="material-symbols-rounded opacity-10">assignment</i>
+                      </div>
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="text-sm font-weight-normal mb-1">
+                          <span class="font-weight-bold">Renouvellement</span> approuvé pour le contrat #1985
+                        </h6>
+                        <p class="text-xs text-secondary mb-0">
+                          <i class="fa fa-clock me-1"></i>
+                          Il y a 3 jours
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item border-radius-md" href="javascript:;">
+                    <div class="d-flex py-1">
+                      <div class="avatar avatar-sm bg-gradient-warning me-3 my-auto">
+                        <i class="material-symbols-rounded opacity-10">warning</i>
+                      </div>
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="text-sm font-weight-normal mb-1">
+                          <span class="font-weight-bold">Contrat #2056</span> en attente de signature
+                        </h6>
+                        <p class="text-xs text-secondary mb-0">
+                          <i class="fa fa-clock me-1"></i>
+                          Il y a 5 jours
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item d-flex align-items-center">
+              <a href="../pages/profile.html" class="nav-link text-body font-weight-bold px-0">
+                <i class="material-symbols-rounded me-1">account_circle</i>
+                <span class="d-sm-inline d-none">John Doe</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- End Navbar -->
+    <div class="container-fluid py-2">
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header p-3">
+              <div class="row">
+                <div class="col-md-6">
+                  <h5 class="mb-0">Gestion des Contrats</h5>
+                  <p class="text-sm mb-0">
+                    Gérez tous vos contrats clients et suivez leur statut
+                  </p>
+                </div>
+                <div class="col-md-6 d-flex justify-content-end align-items-center">
+                  <ul class="nav nav-pills nav-fill p-1" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#tab-all" role="tab" aria-selected="true">
+                        <span class="material-symbols-rounded text-sm me-1">dashboard</span> Tous
+                        <span class="ms-1 badge bg-gradient-dark">42</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#tab-active" role="tab" aria-selected="false">
+                        <span class="material-symbols-rounded text-sm me-1">check_circle</span> Actifs
+                        <span class="ms-1 badge bg-gradient-success">25</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#tab-pending" role="tab" aria-selected="false">
+                        <span class="material-symbols-rounded text-sm me-1">pending</span> En attente
+                        <span class="ms-1 badge bg-gradient-warning">6</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#tab-expired" role="tab" aria-selected="false">
+                        <span class="material-symbols-rounded text-sm me-1">cancel</span> Expirés
+                        <span class="ms-1 badge bg-gradient-danger">11</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="card-body px-0 pb-0">
+              <div class="table-responsive">
+                <div class="tab-content">
+                  <div class="tab-pane fade show active" id="tab-all">
+                    <table class="table align-items-center mb-0">
+                      <thead>
+                        <tr>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">N° Contrat</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Client</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Type</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Date début</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Date fin</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Montant</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Statut</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <div class="d-flex px-2 py-1">
+                              <div>
+                                <i class="material-symbols-rounded opacity-10 me-2">description</i>
+                              </div>
+                              <div class="d-flex flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm">CONT-2301</h6>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="d-flex flex-column justify-content-center">
+                              <h6 class="mb-0 text-sm">Société ALPHA</h6>
+                              <p class="text-xs text-secondary mb-0">ahmed.khalil@alpha.com</p>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">Location</p>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">15/03/2025</p>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">14/03/2026</p>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">32,500 DH</p>
+                          </td>
+                          <td>
+                            <span class="badge badge-sm badge-active">Actif</span>
+                          </td>
+                          <td>
+                            <div class="d-flex">
+                              <a href="javascript:;" class="btn btn-link text-dark px-2 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Voir détails">
+                                <i class="material-symbols-rounded text-sm me-2">visibility</i>
+                              </a>
+                              <a href="javascript:;" class="btn btn-link text-primary px-2 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Éditer">
+                                <i class="material-symbols-rounded text-sm me-2">edit</i>
+                              </a>
+                              <a href="javascript:;" class="btn btn-link text-info px-2 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Imprimer">
+                                <i class="material-symbols-rounded text-sm me-2">print</i>
+                              </a>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="d-flex px-2 py-1">
+                              <div>
+                                <i class="material-symbols-rounded opacity-10 me-2">description</i>
+                              </div>
+                              <div class="d-flex flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm">CONT-2289</h6>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="d-flex flex-column justify-content-center">
+                              <h6 class="mb-0 text-sm">Entreprise BETA</h6>
+                              <p class="text-xs text-secondary mb-0">karim@beta.ma</p>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">Services</p>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">01/02/2025</p>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">31/07/2025</p>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">28,750 DH</p>
+                          </td>
+                          <td>
+                            <span class="badge badge-sm badge-active">Actif</span>
+                          </td>
+                          <td>
+                            <div class="d-flex">
+                              <a href="javascript:;" class="btn btn-link text-dark px-2 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Voir détails">
+                                <i class="material-symbols-rounded text-sm me-2">visibility</i>
+                              </a>
+                              <a href="javascript:;" class="btn btn-link text-primary px-2 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Éditer">
+                                <i class="material-symbols-rounded text-sm me-2">edit</i>
+                              </a>
+                              <a href="javascript:;" class="btn btn-link text-info px-2 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Imprimer">
+                                <i class="material-symbols-rounded text-sm me-2">print</i>
+                              </a>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="d-flex px-2 py-1">
+                              <div>
+                                <i class="material-symbols-rounded opacity-10 me-2">description</i>
+                              </div>
+                              <div class="d-flex flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm">CONT-2278</h6>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="d-flex flex-column justify-content-center">
+                              <h6 class="mb-0 text-sm">GAMMA Industrie</h6>
+                              <p class="text-xs text-secondary mb-0">contact@gamma-industrie.ma</p>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">Transport</p>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">20/01/2025</p>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">19/07/2025</p>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">45,000 DH</p>
+                          </td>
+                          <td>
+                            <span class="badge badge-sm badge-active">Actif</span>
+                          </td>
+                          <td>
+                            <div class="d-flex">
+                              <a href="javascript:;" class="btn btn-link text-dark px-2 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Voir détails">
+                                <i class="material-symbols-rounded text-sm me-2">visibility</i>
+                              </a>
+                              <a href="javascript:;" class="btn btn-link text-primary px-2 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Éditer">
+                                <i class="material-symbols-rounded text-sm me-2">edit</i>
+                              </a>
+                              <a href="javascript:;" class="btn btn-link text-info px-2 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Imprimer">
+                                <i class="material-symbols-rounded text-sm me-2">print</i>
+                              </a>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="d-flex px-2 py-1">
+                              <div>
+                                <i class="material-symbols-rounded opacity-10 me-2">description</i>
+                              </div>
+                              <div class="d-flex flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm">CONT-2269</h6>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="d-flex flex-column justify-content-center">
+                              <h6 class="mb-0 text-sm">Delta Group</h6>
+                              <p class="text-xs text-secondary mb-0">info@deltagroup.com</p>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">Maintenance</p>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">05/01/2025</p>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">04/01/2026</p>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">22,000 DH</p>
+                          </td>
+                          <td>
+                            <span class="badge badge-sm badge-pending">En attente</span>
+                          </td>
+                          <td>
+                            <div class="d-flex">
+                              <a href="javascript:;" class="btn btn-link text-dark px-2 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Voir détails">
+                                <i class="material-symbols-rounded text-sm me-2">visibility</i>
+                              </a>
+                              <a href="javascript:;" class="btn btn-link text-primary px-2 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Éditer">
+                                <i class="material-symbols-rounded text-sm me-2">edit</i>
+                              </a>
+                              <a href="javascript:;" class="btn btn-link text-info px-2 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Imprimer">
+                                <i class="material-symbols-rounded text-sm me-2">print</i>
+                              </a>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="d-flex px-2 py-1">
+                              <div>
+                                <i class="material-symbols-rounded opacity-10 me-2">description</i>
+                              </div>
+                              <div class="d-flex flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm">CONT-2256</h6>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="d-flex flex-column justify-content-center">
+                              <h6 class="mb-0 text-sm">Epsilon SARL</h6>
+                              <p class="text-xs text-secondary mb-0">contact@epsilon.ma</p>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">Location</p>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">12/12/2024</p>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">11/12/2025</p>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">38,200 DH</p>
+                          </td>
+                          <td>
+                            <span class="badge badge-sm badge-expired">Expiré</span>
+                          </td>
+                          <td>
+                            <div class="d-flex">
+                              <a href="javascript:;" class="btn btn-link text-dark px-2 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Voir détails">
+                                <i class="material-symbols-rounded text-sm me-2">visibility</i>
+                              </a>
+                              <a href="javascript:;" class="btn btn-link text-success px-2 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Renouveler">
+                                <i class="material-symbols-rounded text-sm me-2">refresh</i>
+                              </a>
+                              <a href="javascript:;" class="btn btn-link text-info px-2 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Imprimer">
+                                <i class="material-symbols-rounded text-sm me-2">print</i>
+                              </a>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  
+                  <!-- Tab pour les contrats actifs -->
+                  <div class="tab-pane fade" id="tab-active">
+                    <table class="table align-items-center mb-0">
+                      <thead>
+                        <tr>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">N° Contrat</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Client</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Type</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Date début</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Date fin</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Montant</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Statut</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- Contrats avec statut actif uniquement -->
+                        <tr>
+                          <td>
+                            <div class="d-flex px-2 py-1">
+                              <div>
+                                <i class="material-symbols-rounded opacity-10 me-2">description</i>
+                              </div>
+                              <div class="d-flex flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm">CONT-2301</h6>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="d-flex flex-column justify-content-center">
+                              <h6 class="mb-0 text-sm">Société ALPHA</h6>
+                              <p class="text-xs text-secondary mb-0">ahmed.khalil@alpha.com</p>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">Location</p>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">15/03/2025</p>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">14/03/2026</p>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">32,500 DH</p>
+                          </td>
+                          <td>
+                            <span class="badge badge-sm badge-active">Actif</span>
+                          </td>
+                          <td>
+                            <div class="d-flex">
+                              <a href="javascript:;" class="btn btn-link text-dark px-2 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Voir détails">
+                                <i class="material-symbols-rounded text-sm me-2">visibility</i>
+                              </a>
+                              <a href="javascript:;" class="btn btn-link text-primary px-2 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Éditer">
+                                <i class="material-symbols-rounded text-sm me-2">edit</i>
+                              </a>
+                              <a href="javascript:;" class="btn btn-link text-info px-2 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Imprimer">
+                                <i class="material-symbols-rounded text-sm me-2">print</i>
+                              </a>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- Ajoutez d'autres contrats actifs ici -->
+                      </tbody>
+                    </table>
+                  </div>
+                  
+                  <!-- Tab pour les contrats en attente -->
+                  <div class="tab-pane fade" id="tab-pending">
+                    <table class="table align-items-center mb-0">
+                      <thead>
+                        <tr>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">N° Contrat</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Client</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Type</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Date début</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Date fin</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Montant</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Statut</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- Contrats avec statut en attente uniquement -->
+                        <tr>
+                          <td>
+                            <div class="d-flex px-2 py-1">
+                              <div>
+                                <i class="material-symbols-rounded opacity-10 me-2">description</i>
+                              </div>
+                              <div class="d-flex flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm">CONT-2269</h6>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="d-flex flex-column justify-content-center">
+                              <h6 class="mb-0 text-sm">Delta Group</h6>
+                              <p class="text-xs text-secondary mb-0">info@deltagroup.com</p>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">Maintenance</p>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">05/01/2025</p>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">04/01/2026</p>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">22,000 DH</p>
+                          </td>
+                          <td>
+                            <span class="badge badge-sm badge-pending">En attente</span>
+                          </td>
+                          <td>
+                            <div class="d-flex">
+                              <a href="javascript:;" class="btn btn-link text-dark px-2 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Voir détails">
+                                <i class="material-symbols-rounded text-sm me-2">visibility</i>
+                              </a>
+                              <a href="javascript:;" class="btn btn-link text-primary px-2 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Éditer">
+                                <i class="material-symbols-rounded text-sm me-2">edit</i>
+                              </a>
+                              <a href="javascript:;" class="btn btn-link text-info px-2 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Imprimer">
+                                <i class="material-symbols-rounded text-sm me-2">print</i>
+                              </a>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- Ajoutez d'autres contrats en attente ici -->
+                      </tbody>
+                    </table>
+                  </div>
+                  
+                  <!-- Tab pour les contrats expirés -->
+                  <div class="tab-pane fade" id="tab-expired">
+                    <table class="table align-items-center mb-0">
+                      <thead>
+                        <tr>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">N° Contrat</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Client</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Type</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Date début</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Date fin</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Montant</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Statut</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- Contrats avec statut expiré uniquement -->
+                        <tr>
+                          <td>
+                            <div class="d-flex px-2 py-1">
+                              <div>
+                                <i class="material-symbols-rounded opacity-10 me-2">description</i>
+                              </div>
+                              <div class="d-flex flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm">CONT-2256</h6>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="d-flex flex-column justify-content-center">
+                              <h6 class="mb-0 text-sm">Epsilon SARL</h6>
+                              <p class="text-xs text-secondary mb-0">contact@epsilon.ma</p>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">Location</p>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">12/12/2024</p>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">11/12/2025</p>
+                          </td>
+                          <td>
+                            <p class="text-sm font-weight-bold mb-0">38,200 DH</p>
+                          </td>
+                          <td>
+                            <span class="badge badge-sm badge-expired">Expiré</span>
+                          </td>
+                          <td>
+                            <div class="d-flex">
+                              <a href="javascript:;" class="btn btn-link text-dark px-2 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Voir détails">
+                                <i class="material-symbols-rounded text-sm me-2">visibility</i>
+                              </a>
+                              <a href="javascript:;" class="btn btn-link text-success px-2 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Renouveler">
+                                <i class="material-symbols-rounded text-sm me-2">refresh</i>
+                              </a>
+                              <a href="javascript:;" class="btn btn-link text-info px-2 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Imprimer">
+                                <i class="material-symbols-rounded text-sm me-2">print</i>
+                              </a>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- Ajoutez d'autres contrats expirés ici -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <div class="d-flex justify-content-between align-items-center">
+                  <p class="text-sm mb-0">Affichage de <b>1</b> à <b>4</b> sur <b>42</b> contrats</p>
+                  <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-end mb-0">
+                      <li class="page-item disabled">
+                        <a class="page-link" href="javascript:;" tabindex="-1">
+                          <i class="material-symbols-rounded">chevron_left</i>
+                          <span class="sr-only">Précédent</span>
+                        </a>
+                      </li>
+                      <li class="page-item active"><a class="page-link" href="javascript:;">1</a></li>
+                      <li class="page-item"><a class="page-link" href="javascript:;">2</a></li>
+                      <li class="page-item"><a class="page-link" href="javascript:;">3</a></li>
+                      <li class="page-item">
+                        <a class="page-link" href="javascript:;">
+                          <i class="material-symbols-rounded">chevron_right</i>
+                          <span class="sr-only">Suivant</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bouton d'ajout flottant -->
+      <a href="javascript:;" class="btn btn-add-contract bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#addContractModal">
+        <i class="material-symbols-rounded">add</i>
+      </a>
+      
+      <!-- Modal d'ajout de contrat -->
+      <div class="modal fade" id="addContractModal" tabindex="-1" role="dialog" aria-labelledby="addContractModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addContractModalLabel">Ajouter un nouveau contrat</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="newContractForm">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="input-group input-group-static mb-4">
+                      <label>Client</label>
+                      <select class="form-control">
+                        <option value="" selected disabled>Sélectionner un client</option>
+                        <option value="1">Société ALPHA</option>
+                        <option value="2">Entreprise BETA</option>
+                        <option value="3">GAMMA Industrie</option>
+                        <option value="4">Delta Group</option>
+                        <option value="5">Epsilon SARL</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-group input-group-static mb-4">
+                      <label>Type de contrat</label>
+                      <select class="form-control">
+                        <option value="" selected disabled>Sélectionner un type</option>
+                        <option value="location">Location</option>
+                        <option value="services">Services</option>
+                        <option value="transport">Transport</option>
+                        <option value="maintenance">Maintenance</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="input-group input-group-static mb-4">
+                      <label>Date de début</label>
+                      <input type="date" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-group input-group-static mb-4">
+                      <label>Date de fin</label>
+                      <input type="date" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="input-group input-group-static mb-4">
+                      <label>Montant (DH)</label>
+                      <input type="number" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-group input-group-static mb-4">
+                      <label>Statut</label>
+                      <select class="form-control">
+                        <option value="draft">Brouillon</option>
+                        <option value="pending">En attente</option>
+                        <option value="active" selected>Actif</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="input-group input-group-static mb-4">
+                      <label>Description</label>
+                      <textarea class="form-control" rows="4"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Annuler</button>
+              <button type="button" class="btn bg-gradient-primary">Enregistrer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="footer py-4">
+        <div class="container-fluid">
+          <div class="row align-items-center justify-content-lg-between">
+            <div class="col-lg-6 mb-lg-0 mb-4">
+              <div class="copyright text-center text-sm text-muted text-lg-start">
+                © <script>
+                  document.write(new Date().getFullYear())
+                </script> SEBUL - Tous droits réservés
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                <li class="nav-item">
+                  <a href="javascript:;" class="nav-link text-muted">Mentions légales</a>
+                </li>
+                <li class="nav-item">
+                  <a href="javascript:;" class="nav-link text-muted">Politique de confidentialité</a>
+                </li>
+                <li class="nav-item">
+                  <a href="javascript:;" class="nav-link text-muted">Contact</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </main>
+  
+  <!--   Core JS Files   -->
+  <script src="../assets/js/core/popper.min.js"></script>
+  <script src="../assets/js/core/bootstrap.min.js"></script>
+  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+    
+    // Initialize tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+  </script>
+  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="../assets/js/material-dashboard.min.js?v=3.2.0"></script>
+</body>
+
+</html>

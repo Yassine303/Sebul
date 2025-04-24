@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <title>
+    SEBUL - Fournisseurs
+  </title>
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
+  <!-- Nucleo Icons -->
+  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <!-- Material Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="../assets/css/material-dashboard.css?v=3.2.0" rel="stylesheet" />
+  <style>
+    /* SEBUL Color Theme - Based on logo colors */
+    :root {
+      --sebul-red: #E63E3A;
+      --sebul-blue: #1B4695;
+      --sebul-light-blue: #3266CC;
+    }
+    
+    .bg-gradient-primary {
+      background-image: linear-gradient(195deg, var(--sebul-red), #cc2924) !important;
+    }
+    
+    .bg-gradient-blue {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .navbar-vertical.bg-white .navbar-nav .nav-link.active {
+      background-color: var(--sebul-red);
+      color: white;
+    }
+    
+    .bg-gradient-dark {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .btn.bg-gradient-dark {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .text-info {
+      color: var(--sebul-blue) !important;
+    }
+    
+    .bg-gradient-info {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .text-success {
+      color: var(--sebul-red) !important;
+    }
+    
+    .bg-gradient-success {
+      background-image: linear-gradient(195deg, var(--sebul-red), #cc2924) !important;
+    }
+    
+    .text-primary {
+      color: var(--sebul-red) !important;
+    }
+    
+    .btn-primary, .btn.bg-gradient-primary {
+      background-color: var(--sebul-red);
+      background-image: linear-gradient(195deg, var(--sebul-red), #cc2924);
+    }
+    
+    .btn-outline-primary {
+      color: var(--sebul-red);
+      border-color: var(--sebul-red);
+    }
+    
+    .btn-outline-primary:hover {
+      background-color: var(--sebul-red);
+      border-color: var(--sebul-red);
+    }
+    
+    .progress-bar.bg-gradient-info {
+      background-image: linear-gradient(195deg, var(--sebul-blue), #0d2b5e) !important;
+    }
+    
+    .bg-gradient-warning {
+      background-image: linear-gradient(195deg, var(--sebul-red), #cc2924) !important;
+    }
+    
+    .active-nav-link {
+      background-color: var(--sebul-red) !important;
+      color: white !important;
+      box-shadow: 0 4px 6px -1px rgba(230, 62, 58, 0.15), 0 2px 4px -1px rgba(230, 62, 58, 0.06);
+    }
+    
+    .badge-status {
+      padding: 5px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+    
+    .badge-active {
+      background-color: rgba(76, 175, 80, 0.1);
+      color: #4CAF50;
+      border: 1px solid #4CAF50;
+    }
+    
+    .badge-inactive {
+      background-color: rgba(244, 67, 54, 0.1);
+      color: #F44336;
+      border: 1px solid #F44336;
+    }
+    
+    .badge-pending {
+      background-color: rgba(255, 152, 0, 0.1);
+      color: #FF9800;
+      border: 1px solid #FF9800;
+    }
+    
+    .badge-preferred {
+      background-color: rgba(156, 39, 176, 0.1);
+      color: #9C27B0;
+      border: 1px solid #9C27B0;
+    }
+    
+    .fournisseurs-table th,
+    .fournisseurs-table td {
+      vertical-align: middle;
+    }
+    
+    .filters-card {
+      margin-bottom: 1.5rem;
+    }
+    
+    .supplier-avatar {
+      height: 40px;
+      width: 40px;
+      border-radius: 0.375rem;
+      object-fit: cover;
+    }
+  </style>
+</head>
+
+<body class="g-sidenav-show bg-gray-100">
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2 bg-white my-2" id="sidenav-main">
+    <div class="sidenav-header">
+      <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+      <img src="../assets/img/logo (1).png" height="105px" hspace="20">
+    </div>
+    <hr class="horizontal dark mt-0 mb-2">
+    <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="../pages/dashboard.html">
+            <i class="material-symbols-rounded opacity-5">dashboard</i>
+            <span class="nav-link-text ms-1">Dashboard</span>
+          </a>
+        </li>
+  
+        <!-- 1. Gestion commerciale -->
+        <li class="nav-item">
+          <a data-bs-toggle="collapse" href="#gestionCommercialePages" class="nav-link text-dark" aria-controls="gestionCommercialePages" role="button" aria-expanded="false">
+            <i class="material-symbols-rounded opacity-5">store</i>
+            <span class="nav-link-text ms-1">Gestion commerciale</span>
+            <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+          </a>
+          <div class="collapse" id="gestionCommercialePages">
+            <ul class="nav ms-4">
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/clients.html">
+                  <span class="nav-link-text ms-1">Clients</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/billing.html">
+                  <span class="nav-link-text ms-1">Devis</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/virtual-reality.html">
+                  <span class="nav-link-text ms-1">Contrats</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/rtl.html">
+                  <span class="nav-link-text ms-1">Factures</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/notifications.html">
+                  <span class="nav-link-text ms-1">Bons de Livraison (BL)</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+  
+        <!-- 2. Parc et Achats -->
+        <li class="nav-item">
+          <a data-bs-toggle="collapse" href="#parcAchatsPages" class="nav-link text-dark" aria-controls="parcAchatsPages" role="button" aria-expanded="true">
+            <i class="material-symbols-rounded opacity-5">build</i>
+            <span class="nav-link-text ms-1">Parc & Achats</span>
+            <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+          </a>
+          <div class="collapse show" id="parcAchatsPages">
+            <ul class="nav ms-4">
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/machines.html">
+                  <span class="nav-link-text ms-1">Machines/Engins</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active-nav-link" href="../pages/fournisseurs.html">
+                  <span class="nav-link-text ms-1">Fournisseurs</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/commandes.html">
+                  <span class="nav-link-text ms-1">Commandes fournisseurs</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/bons-commande.html">
+                  <span class="nav-link-text ms-1">Bons de commande</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+  
+        <!-- 3. Transport et Services -->
+        <li class="nav-item">
+          <a data-bs-toggle="collapse" href="#transportServicesPages" class="nav-link text-dark" aria-controls="transportServicesPages" role="button" aria-expanded="false">
+            <i class="material-symbols-rounded opacity-5">local_shipping</i>
+            <span class="nav-link-text ms-1">Transport & Services</span>
+            <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+          </a>
+          <div class="collapse" id="transportServicesPages">
+            <ul class="nav ms-4">
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/missions.html">
+                  <span class="nav-link-text ms-1">Missions de transport</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/factures-transitaire.html">
+                  <span class="nav-link-text ms-1">Factures transitaire</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/produits-services.html">
+                  <span class="nav-link-text ms-1">Produits/Services</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+  
+        <!-- 4. Finances -->
+        <li class="nav-item">
+          <a data-bs-toggle="collapse" href="#financesPages" class="nav-link text-dark" aria-controls="financesPages" role="button" aria-expanded="false">
+            <i class="material-symbols-rounded opacity-5">account_balance</i>
+            <span class="nav-link-text ms-1">Finances</span>
+            <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+          </a>
+          <div class="collapse" id="financesPages">
+            <ul class="nav ms-4">
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/charges.html">
+                  <span class="nav-link-text ms-1">Charges</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/paiements.html">
+                  <span class="nav-link-text ms-1">Paiements</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/rapports.html">
+                  <span class="nav-link-text ms-1">Rapports & Statistiques</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+  
+        <!-- 5. Administration -->
+        <li class="nav-item">
+          <a data-bs-toggle="collapse" href="#administrationPages" class="nav-link text-dark" aria-controls="administrationPages" role="button" aria-expanded="false">
+            <i class="material-symbols-rounded opacity-5">admin_panel_settings</i>
+            <span class="nav-link-text ms-1">Administration</span>
+            <i class="material-symbols-rounded opacity-5 ms-auto">expand_more</i>
+          </a>
+          <div class="collapse" id="administrationPages">
+            <ul class="nav ms-4">
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/utilisateurs.html">
+                  <span class="nav-link-text ms-1">Utilisateurs & rôles</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/parametres.html">
+                  <span class="nav-link-text ms-1">Paramètres</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="../pages/taxes.html">
+                  <span class="nav-link-text ms-1">TVA & taxes</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+  
+        <li class="nav-item mt-3">
+          <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-5">Account pages</h6>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="../pages/profile.html">
+            <i class="material-symbols-rounded opacity-5">person</i>
+            <span class="nav-link-text ms-1">Profile</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="../pages/sign-in.html">
+            <i class="material-symbols-rounded opacity-5">login</i>
+            <span class="nav-link-text ms-1">Sign In</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="../pages/sign-up.html">
+            <i class="material-symbols-rounded opacity-5">assignment</i>
+            <span class="nav-link-text ms-1">Sign Up</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="sidenav-footer position-absolute w-100 bottom-0">
+      <div class="mx-3">
+        
+      </div>
+    </div>
+  </aside>
+  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
+    <!-- Navbar -->
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-3 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
+      <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Parc & Achats</a></li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Fournisseurs</li>
+          </ol>
+        </nav>
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+            <div class="input-group input-group-outline">
+              <label class="form-label">Rechercher...</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+          <ul class="navbar-nav d-flex align-items-center justify-content-end">
+            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                <div class="sidenav-toggler-inner">
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                </div>
+              </a>
+            </li>
+            <li class="nav-item px-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0">
+                <i class="material-symbols-rounded fixed-plugin-button-nav">settings</i>
+              </a>
+            </li>
+            <li class="nav-item dropdown pe-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="material-symbols-rounded">notifications</i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                <li class="mb-2">
+                  <a class="dropdown-item border-radius-md" href="javascript:;">
+                    <div class="d-flex py-1">
+                      <div class="my-auto">
+                        <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3">
+                      </div>
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="text-sm font-weight-normal mb-1">
+                          <span class="font-weight-bold">Nouveau catalogue</span> de Caterpillar disponible
+                        </h6>
+                        <p class="text-xs text-secondary mb-0">
+                          <i class="fa fa-clock me-1"></i>
+                          Il y a 2 heures
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <li class="mb-2">
+                  <a class="dropdown-item border-radius-md" href="javascript:;">
+                    <div class="d-flex py-1">
+                      <div class="my-auto">
+                        <img src="../assets/img/small-logos/logo-spotify.svg" class="avatar avatar-sm bg-gradient-blue me-3">
+                      </div>
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="text-sm font-weight-normal mb-1">
+                          <span class="font-weight-bold">Facture impayée</span> à régler
+                        </h6>
+                        <p class="text-xs text-secondary mb-0">
+                          <i class="fa fa-clock me-1"></i>
+                          Liebherr SARL - Échéance dans 5 jours
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item border-radius-md" href="javascript:;">
+                    <div class="d-flex py-1">
+                      <div class="avatar avatar-sm bg-gradient-blue me-3 my-auto">
+                        <i class="material-symbols-rounded">shopping_cart</i>
+                      </div>
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="text-sm font-weight-normal mb-1">
+                          Commande livrée par Volvo Construction
+                        </h6>
+                        <p class="text-xs text-secondary mb-0">
+                          <i class="fa fa-clock me-1"></i>
+                          Hier à 16h45
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item d-flex align-items-center">
+              <a href="../pages/profile.html" class="nav-link text-body font-weight-bold px-0">
+                <i class="material-symbols-rounded">account_circle</i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- End Navbar -->
+    <div class="container-fluid py-2">
+      <!-- Header -->
+      <div class="row mb-4">
+        <div class="col-lg-8 col-md-8">
+          <h3 class="mb-0 h4 font-weight-bolder">Gestion des Fournisseurs</h3>
+          <p class="mb-2">
+            Gérez vos fournisseurs, leurs informations de contact et leurs conditions commerciales.
+          </p>
+        </div>
+        <div class="col-lg-4 col-md-4 d-flex justify-content-end align-items-center">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSupplierModal">
+            <i class="material-symbols-rounded opacity-10 me-1">add</i>
+            Ajouter un fournisseur
+          </button>
+        </div>
+      </div>
+
+      <!-- Résumé des fournisseurs -->
+      <div class="row">
+        <div class="col-xl-3 col-sm-6 mb-xl-3 mb-4">
+          <div class="card">
+            <div class="card-header p-2 ps-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <p class="text-sm mb-0 text-capitalize">Total fournisseurs</p>
+                  <h4 class="mb-0">38</h4>
+                </div>
+                <div class="icon icon-md icon-shape bg-gradient-primary shadow text-center border-radius-lg">
+                  <i class="material-symbols-rounded opacity-10">groups</i>
+                </div>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-2 ps-3">
+              <p class="mb-0 text-sm"><span class="text-success font-weight-bolder">+3 </span>depuis le mois dernier</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-3 mb-4">
+          <div class="card">
+            <div class="card-header p-2 ps-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <p class="text-sm mb-0 text-capitalize">Fournisseurs actifs</p>
+                  <h4 class="mb-0">32</h4>
+                </div>
+                <div class="icon icon-md icon-shape bg-gradient-warning shadow text-center border-radius-lg">
+                  <i class="material-symbols-rounded opacity-10">verified</i>
+                </div>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-2 ps-3">
+              <p class="mb-0 text-sm"><span class="text-success font-weight-bolder">84% </span>du total</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-3 mb-4">
+          <div class="card">
+            <div class="card-header p-2 ps-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <p class="text-sm mb-0 text-capitalize">Commandes en cours</p>
+                  <h4 class="mb-0">12</h4>
+                </div>
+                <div class="icon icon-md icon-shape bg-gradient-blue shadow text-center border-radius-lg">
+                  <i class="material-symbols-rounded opacity-10">pending_actions</i>
+                </div>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-2 ps-3">
+              <p class="mb-0 text-sm"><span class="text-danger font-weight-bolder">-2 </span>depuis la semaine dernière</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-3 mb-4">
+          <div class="card">
+            <div class="card-header p-2 ps-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <p class="text-sm mb-0 text-capitalize">Fournisseurs préférés</p>
+                  <h4 class="mb-0">6</h4>
+                </div>
+                <div class="icon icon-md icon-shape bg-gradient-success shadow text-center border-radius-lg">
+                  <i class="material-symbols-rounded opacity-10">star</i>
+                </div>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-2 ps-3">
+              <p class="mb-0 text-sm"><span class="text-success font-weight-bolder">16% </span>du total</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filtres -->
+      <div class="row">
+        <div class="col-12">
+          <div class="card filters-card">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-md-3 col-sm-6 mb-2">
+                  <label class="form-label">Catégorie</label>
+                  <select class="form-control">
+                    <option value="">Toutes les catégories</option>
+                    <option value="1">Fabricants d'équipements</option>
+                    <option value="2">Distributeurs de pièces</option>
+                    <option value="3">Services de maintenance</option>
+                    <option value="4">Location d'équipements</option>
+                    <option value="5">Transitaires</option>
+                  </select>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-2">
+                  <label class="form-label">Statut</label>
+                  <select class="form-control">
+                    <option value="">Tous les statuts</option>
+                    <option value="active">Actif</option>
+                    <option value="inactive">Inactif</option>
+                    <option value="pending">En attente</option>
+                    <option value="preferred">Préféré</option>
+                  </select>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-2">
+                  <label class="form-label">Pays</label>
+                  <select class="form-control">
+                    <option value="">Tous les pays</option>
+                    <option value="ma">Maroc</option>
+                    <option value="fr">France</option>
+                    <option value="de">Allemagne</option>
+                    <option value="cn">Chine</option>
+                    <option value="us">États-Unis</option>
+                  </select>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-2">
+                  <label class="form-label">Délai de paiement</label>
+                  <select class="form-control">
+                    <option value="">Tous les délais</option>
+                    <option value="immediate">Immédiat</option>
+                    <option value="30days">30 jours</option>
+                    <option value="60days">60 jours</option>
+                    <option value="90days">90 jours</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col-12 d-flex justify-content-end">
+                  <button class="btn btn-outline-primary me-2">Réinitialiser</button>
+                  <button class="btn btn-primary">Filtrer</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Liste des fournisseurs -->
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <!-- Continuation de la div card-header -->
+<div class="card-header pb-0">
+    <div class="d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">Liste des fournisseurs</h5>
+      <div>
+        <button class="btn btn-sm btn-outline-secondary me-2">
+          <i class="material-symbols-rounded opacity-10 me-1">download</i>
+          Exporter
+        </button>
+        <button class="btn btn-sm btn-outline-secondary">
+          <i class="material-symbols-rounded opacity-10 me-1">print</i>
+          Imprimer
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card-body px-0 pb-2">
+    <div class="table-responsive p-0">
+      <table class="table align-items-center mb-0 fournisseurs-table">
+        <thead>
+          <tr>
+            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fournisseur</th>
+            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Catégorie</th>
+            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Contact</th>
+            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Délai de paiement</th>
+            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Statut</th>
+            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Dernière commande</th>
+            <th class="text-secondary opacity-7"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Fournisseur 1 -->
+          <tr>
+            <td>
+              <div class="d-flex px-2 py-1">
+                <div>
+                  <img src="../assets/img/logos/caterpillar.png" class="supplier-avatar me-3" alt="Caterpillar">
+                </div>
+                <div class="d-flex flex-column justify-content-center">
+                  <h6 class="mb-0 text-sm">Caterpillar Inc.</h6>
+                  <p class="text-xs text-secondary mb-0">États-Unis</p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <p class="text-xs font-weight-bold mb-0">Fabricants d'équipements</p>
+            </td>
+            <td>
+              <p class="text-xs text-secondary mb-0">info@caterpillar.com</p>
+              <p class="text-xs text-secondary mb-0">+1 309-675-1000</p>
+            </td>
+            <td>
+              <p class="text-xs font-weight-bold mb-0">60 jours</p>
+            </td>
+            <td>
+              <span class="badge-status badge-preferred">Préféré</span>
+            </td>
+            <td>
+              <p class="text-xs font-weight-bold mb-0">12/03/2025</p>
+            </td>
+            <td class="align-middle">
+              <button class="btn btn-link text-secondary mb-0" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="material-symbols-rounded text-xs">more_vert</i>
+              </button>
+              <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Voir les détails</a></li>
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Modifier</a></li>
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Créer une commande</a></li>
+                <li><a class="dropdown-item border-radius-md text-danger" href="javascript:;">Désactiver</a></li>
+              </ul>
+            </td>
+          </tr>
+          
+          <!-- Fournisseur 2 -->
+          <tr>
+            <td>
+              <div class="d-flex px-2 py-1">
+                <div>
+                  <img src="../assets/img/logos/volvo.png" class="supplier-avatar me-3" alt="Volvo">
+                </div>
+                <div class="d-flex flex-column justify-content-center">
+                  <h6 class="mb-0 text-sm">Volvo Construction Equipment</h6>
+                  <p class="text-xs text-secondary mb-0">Suède</p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <p class="text-xs font-weight-bold mb-0">Fabricants d'équipements</p>
+            </td>
+            <td>
+              <p class="text-xs text-secondary mb-0">contact@volvoce.com</p>
+              <p class="text-xs text-secondary mb-0">+46 31-66-00-00</p>
+            </td>
+            <td>
+              <p class="text-xs font-weight-bold mb-0">30 jours</p>
+            </td>
+            <td>
+              <span class="badge-status badge-active">Actif</span>
+            </td>
+            <td>
+              <p class="text-xs font-weight-bold mb-0">02/04/2025</p>
+            </td>
+            <td class="align-middle">
+              <button class="btn btn-link text-secondary mb-0" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="material-symbols-rounded text-xs">more_vert</i>
+              </button>
+              <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Voir les détails</a></li>
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Modifier</a></li>
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Créer une commande</a></li>
+                <li><a class="dropdown-item border-radius-md text-danger" href="javascript:;">Désactiver</a></li>
+              </ul>
+            </td>
+          </tr>
+          
+          <!-- Fournisseur 3 -->
+          <tr>
+            <td>
+              <div class="d-flex px-2 py-1">
+                <div>
+                  <img src="../assets/img/logos/liebherr.png" class="supplier-avatar me-3" alt="Liebherr">
+                </div>
+                <div class="d-flex flex-column justify-content-center">
+                  <h6 class="mb-0 text-sm">Liebherr SARL</h6>
+                  <p class="text-xs text-secondary mb-0">Allemagne</p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <p class="text-xs font-weight-bold mb-0">Fabricants d'équipements</p>
+            </td>
+            <td>
+              <p class="text-xs text-secondary mb-0">info@liebherr.com</p>
+              <p class="text-xs text-secondary mb-0">+49 7351-41-0</p>
+            </td>
+            <td>
+              <p class="text-xs font-weight-bold mb-0">90 jours</p>
+            </td>
+            <td>
+              <span class="badge-status badge-active">Actif</span>
+            </td>
+            <td>
+              <p class="text-xs font-weight-bold mb-0">25/03/2025</p>
+            </td>
+            <td class="align-middle">
+              <button class="btn btn-link text-secondary mb-0" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="material-symbols-rounded text-xs">more_vert</i>
+              </button>
+              <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Voir les détails</a></li>
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Modifier</a></li>
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Créer une commande</a></li>
+                <li><a class="dropdown-item border-radius-md text-danger" href="javascript:;">Désactiver</a></li>
+              </ul>
+            </td>
+          </tr>
+          
+          <!-- Fournisseur 4 -->
+          <tr>
+            <td>
+              <div class="d-flex px-2 py-1">
+                <div>
+                  <img src="../assets/img/logos/komatsu.png" class="supplier-avatar me-3" alt="Komatsu">
+                </div>
+                <div class="d-flex flex-column justify-content-center">
+                  <h6 class="mb-0 text-sm">Komatsu Ltd.</h6>
+                  <p class="text-xs text-secondary mb-0">Japon</p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <p class="text-xs font-weight-bold mb-0">Fabricants d'équipements</p>
+            </td>
+            <td>
+              <p class="text-xs text-secondary mb-0">global@komatsu.com</p>
+              <p class="text-xs text-secondary mb-0">+81 3-5561-2600</p>
+            </td>
+            <td>
+              <p class="text-xs font-weight-bold mb-0">30 jours</p>
+            </td>
+            <td>
+              <span class="badge-status badge-preferred">Préféré</span>
+            </td>
+            <td>
+              <p class="text-xs font-weight-bold mb-0">15/03/2025</p>
+            </td>
+            <td class="align-middle">
+              <button class="btn btn-link text-secondary mb-0" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="material-symbols-rounded text-xs">more_vert</i>
+              </button>
+              <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Voir les détails</a></li>
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Modifier</a></li>
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Créer une commande</a></li>
+                <li><a class="dropdown-item border-radius-md text-danger" href="javascript:;">Désactiver</a></li>
+              </ul>
+            </td>
+          </tr>
+          
+          <!-- Fournisseur 5 -->
+          <tr>
+            <td>
+              <div class="d-flex px-2 py-1">
+                <div>
+                  <img src="../assets/img/logos/jcb.png" class="supplier-avatar me-3" alt="JCB">
+                </div>
+                <div class="d-flex flex-column justify-content-center">
+                  <h6 class="mb-0 text-sm">JCB Limited</h6>
+                  <p class="text-xs text-secondary mb-0">Royaume-Uni</p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <p class="text-xs font-weight-bold mb-0">Fabricants d'équipements</p>
+            </td>
+            <td>
+              <p class="text-xs text-secondary mb-0">info@jcb.com</p>
+              <p class="text-xs text-secondary mb-0">+44 1889-590312</p>
+            </td>
+            <td>
+              <p class="text-xs font-weight-bold mb-0">60 jours</p>
+            </td>
+            <td>
+              <span class="badge-status badge-active">Actif</span>
+            </td>
+            <td>
+              <p class="text-xs font-weight-bold mb-0">05/04/2025</p>
+            </td>
+            <td class="align-middle">
+              <button class="btn btn-link text-secondary mb-0" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="material-symbols-rounded text-xs">more_vert</i>
+              </button>
+              <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Voir les détails</a></li>
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Modifier</a></li>
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Créer une commande</a></li>
+                <li><a class="dropdown-item border-radius-md text-danger" href="javascript:;">Désactiver</a></li>
+              </ul>
+            </td>
+          </tr>
+          
+          <!-- Fournisseur 6 -->
+          <tr>
+            <td>
+              <div class="d-flex px-2 py-1">
+                <div>
+                  <img src="../assets/img/logos/atlas.png" class="supplier-avatar me-3" alt="Atlas Copco">
+                </div>
+                <div class="d-flex flex-column justify-content-center">
+                  <h6 class="mb-0 text-sm">Atlas Copco Maroc</h6>
+                  <p class="text-xs text-secondary mb-0">Maroc</p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <p class="text-xs font-weight-bold mb-0">Distributeurs de pièces</p>
+            </td>
+            <td>
+              <p class="text-xs text-secondary mb-0">contact@atlascopco.ma</p>
+              <p class="text-xs text-secondary mb-0">+212 522-600-900</p>
+            </td>
+            <td>
+              <p class="text-xs font-weight-bold mb-0">30 jours</p>
+            </td>
+            <td>
+              <span class="badge-status badge-active">Actif</span>
+            </td>
+            <td>
+              <p class="text-xs font-weight-bold mb-0">20/03/2025</p>
+            </td>
+            <td class="align-middle">
+              <button class="btn btn-link text-secondary mb-0" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="material-symbols-rounded text-xs">more_vert</i>
+              </button>
+              <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Voir les détails</a></li>
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Modifier</a></li>
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Créer une commande</a></li>
+                <li><a class="dropdown-item border-radius-md text-danger" href="javascript:;">Désactiver</a></li>
+              </ul>
+            </td>
+          </tr>
+          
+          <!-- Fournisseur 7 -->
+          <tr>
+            <td>
+              <div class="d-flex px-2 py-1">
+                <div>
+                  <img src="../assets/img/logos/bosch.png" class="supplier-avatar me-3" alt="Bosch">
+                </div>
+                <div class="d-flex flex-column justify-content-center">
+                  <h6 class="mb-0 text-sm">Bosch Pièces BTP</h6>
+                  <p class="text-xs text-secondary mb-0">France</p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <p class="text-xs font-weight-bold mb-0">Distributeurs de pièces</p>
+            </td>
+            <td>
+              <p class="text-xs text-secondary mb-0">btp@bosch.fr</p>
+              <p class="text-xs text-secondary mb-0">+33 1-49-45-35-00</p>
+            </td>
+            <td>
+              <p class="text-xs font-weight-bold mb-0">60 jours</p>
+            </td>
+            <td>
+              <span class="badge-status badge-active">Actif</span>
+            </td>
+            <td>
+              <p class="text-xs font-weight-bold mb-0">01/04/2025</p>
+            </td>
+            <td class="align-middle">
+              <button class="btn btn-link text-secondary mb-0" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="material-symbols-rounded text-xs">more_vert</i>
+              </button>
+              <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Voir les détails</a></li>
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Modifier</a></li>
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Créer une commande</a></li>
+                <li><a class="dropdown-item border-radius-md text-danger" href="javascript:;">Désactiver</a></li>
+              </ul>
+            </td>
+          </tr>
+          
+          <!-- Fournisseur 8 -->
+          <tr>
+            <td>
+              <div class="d-flex px-2 py-1">
+                <div>
+                  <img src="../assets/img/logos/ctm.png" class="supplier-avatar me-3" alt="CTM">
+                </div>
+                <div class="d-flex flex-column justify-content-center">
+                  <h6 class="mb-0 text-sm">CTM Transport</h6>
+                  <p class="text-xs text-secondary mb-0">Maroc</p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <p class="text-xs font-weight-bold mb-0">Transitaires</p>
+            </td>
+            <td>
+              <p class="text-xs text-secondary mb-0">contact@ctm.ma</p>
+              <p class="text-xs text-secondary mb-0">+212 522-451-200</p>
+            </td>
+            <td>
+              <p class="text-xs font-weight-bold mb-0">30 jours</p>
+            </td>
+            <td>
+              <span class="badge-status badge-inactive">Inactif</span>
+            </td>
+            <td>
+              <p class="text-xs font-weight-bold mb-0">10/01/2025</p>
+            </td>
+            <td class="align-middle">
+              <button class="btn btn-link text-secondary mb-0" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="material-symbols-rounded text-xs">more_vert</i>
+              </button>
+              <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Voir les détails</a></li>
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Modifier</a></li>
+                <li><a class="dropdown-item border-radius-md" href="javascript:;">Créer une commande</a></li>
+                <li><a class="dropdown-item border-radius-md text-success" href="javascript:;">Activer</a></li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Pagination -->
+    <div class="d-flex justify-content-center justify-content-md-end mt-3 px-3">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" href="javascript:;" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item active"><a class="page-link" href="javascript:;">1</a></li>
+          <li class="page-item"><a class="page-link" href="javascript:;">2</a></li>
+          <li class="page-item"><a class="page-link" href="javascript:;">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="javascript:;" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Footer -->
+        <footer class="footer py-4">
+          <div class="container-fluid">
+            <div class="row align-items-center justify-content-lg-between">
+              <div class="col-lg-6 mb-lg-0 mb-4">
+                <div class="copyright text-center text-sm text-muted text-lg-start">
+                  © <script>
+                    document.write(new Date().getFullYear())
+                  </script> SEBUL - Système de gestion BTP
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                  <li class="nav-item">
+                    <a href="javascript:;" class="nav-link text-muted">Aide</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="javascript:;" class="nav-link text-muted">À propos</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="javascript:;" class="nav-link text-muted">Contact</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="javascript:;" class="nav-link pe-0 text-muted">Mentions légales</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </main>
+  
+    <!-- Modal pour ajouter un fournisseur -->
+    <div class="modal fade" id="addSupplierModal" tabindex="-1" role="dialog" aria-labelledby="addSupplierModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addSupplierModalLabel">Ajouter un nouveau fournisseur</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="row">
+                <div class="col-12 mb-3">
+                  <h6 class="text-uppercase text-xs font-weight-bolder opacity-8">Informations de base</h6>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group input-group-static mb-4">
+                    <label>Nom du fournisseur</label>
+                    <input type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group input-group-static mb-4">
+                    <label>Catégorie</label>
+                    <select class="form-control">
+                      <option value="" disabled selected>Sélectionner une catégorie</option>
+                      <option value="1">Fabricants d'équipements</option>
+                      <option value="2">Distributeurs de pièces</option>
+                      <option value="3">Services de maintenance</option>
+                      <option value="4">Location d'équipements</option>
+                      <option value="5">Transitaires</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group input-group-static mb-4">
+                    <label>Pays</label>
+                    <select class="form-control">
+                      <option value="" disabled selected>Sélectionner un pays</option>
+                      <option value="ma">Maroc</option>
+                      <option value="fr">France</option>
+                      <option value="de">Allemagne</option>
+                      <option value="cn">Chine</option>
+                      <option value="us">États-Unis</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group input-group-static mb-4">
+                    <label>Statut</label>
+                    <select class="form-control">
+                      <option value="active">Actif</option>
+                      <option value="inactive">Inactif</option>
+                      <option value="pending">En attente</option>
+                      <option value="preferred">Préféré</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="row mt-3">
+                <div class="col-12 mb-3">
+                  <h6 class="text-uppercase text-xs font-weight-bolder opacity-8">Coordonnées</h6>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group input-group-static mb-4">
+                    <label>Email</label>
+                    <input type="email" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group input-group-static mb-4">
+                    <label>Téléphone</label>
+                    <input type="tel" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group input-group-static mb-4">
+                    <label>Adresse</label>
+                    <input type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group input-group-static mb-4">
+                    <label>Ville</label>
+                    <input type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group input-group-static mb-4">
+                    <label>Code postal</label>
+                    <input type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group input-group-static mb-4">
+                    <label>Site web</label>
+                    <input type="url" class="form-control">
+                  </div>
+                </div>
+              </div>
+  
+              <div class="row mt-3">
+                <div class="col-12 mb-3">
+                  <h6 class="text-uppercase text-xs font-weight-bolder opacity-8">Conditions commerciales</h6>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group input-group-static mb-4">
+                    <label>Délai de paiement</label>
+                    <select class="form-control">
+                      <option value="immediate">Immédiat</option>
+                      <option value="30days" selected>30 jours</option>
+                      <option value="60days">60 jours</option>
+                      <option value="90days">90 jours</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group input-group-static mb-4">
+                    <label>Devise</label>
+                    <select class="form-control">
+                      <option value="mad">MAD - Dirham marocain</option>
+                      <option value="eur">EUR - Euro</option>
+                      <option value="usd">USD - Dollar américain</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group input-group-static mb-4">
+                    <label>Identifiant fiscal</label>
+                    <input type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group input-group-static mb-4">
+                    <label>ICE (Identifiant Commun Entreprise)</label>
+                    <input type="text" class="form-control">
+                  </div>
+                </div>
+              </div>
+  
+              <div class="row mt-3">
+                <div class="col-12">
+                  <div class="input-group input-group-static mb-4">
+                    <label>Notes / Commentaires</label>
+                    <textarea class="form-control" rows="4"></textarea>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            <button type="button" class="btn btn-primary">Enregistrer</button>
+          </div>
+          </div>
+          </div>
+          </div>
+          
+          <!-- Modal pour filtrer les fournisseurs -->
+          <div class="modal fade" id="filterSupplierModal" tabindex="-1" role="dialog" aria-labelledby="filterSupplierModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="filterSupplierModalLabel">Filtrer les fournisseurs</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="input-group input-group-static mb-4">
+                          <label>Catégorie</label>
+                          <select class="form-control" multiple>
+                            <option value="1">Fabricants d'équipements</option>
+                            <option value="2">Distributeurs de pièces</option>
+                            <option value="3">Services de maintenance</option>
+                            <option value="4">Location d'équipements</option>
+                            <option value="5">Transitaires</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="input-group input-group-static mb-4">
+                          <label>Pays</label>
+                          <select class="form-control" multiple>
+                            <option value="ma">Maroc</option>
+                            <option value="fr">France</option>
+                            <option value="de">Allemagne</option>
+                            <option value="jp">Japon</option>
+                            <option value="se">Suède</option>
+                            <option value="uk">Royaume-Uni</option>
+                            <option value="us">États-Unis</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="input-group input-group-static mb-4">
+                          <label>Statut</label>
+                          <select class="form-control" multiple>
+                            <option value="active">Actif</option>
+                            <option value="inactive">Inactif</option>
+                            <option value="pending">En attente</option>
+                            <option value="preferred">Préféré</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="input-group input-group-static mb-4">
+                          <label>Délai de paiement</label>
+                          <select class="form-control" multiple>
+                            <option value="immediate">Immédiat</option>
+                            <option value="30days">30 jours</option>
+                            <option value="60days">60 jours</option>
+                            <option value="90days">90 jours</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                  <button type="button" class="btn btn-outline-secondary">Réinitialiser</button>
+                  <button type="button" class="btn btn-primary">Appliquer</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Scripts -->
+          <script src="../assets/js/core/popper.min.js"></script>
+          <script src="../assets/js/core/bootstrap.min.js"></script>
+          <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+          <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+          
+          <script>
+            // Initialisation des scrollbars
+            var win = navigator.platform.indexOf('Win') > -1;
+            if (win && document.querySelector('#sidenav-scrollbar')) {
+              var options = {
+                damping: '0.5'
+              }
+              Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+            }
+          
+            // Initialisation des tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+              return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+          
+            // Recherche de fournisseurs
+            document.getElementById('supplierSearch').addEventListener('input', function() {
+              var searchTerm = this.value.toLowerCase();
+              var rows = document.querySelectorAll('.fournisseurs-table tbody tr');
+              
+              rows.forEach(function(row) {
+                var supplierName = row.querySelector('h6').textContent.toLowerCase();
+                var countryName = row.querySelector('p.text-xs.text-secondary').textContent.toLowerCase();
+                var category = row.querySelector('p.text-xs.font-weight-bold').textContent.toLowerCase();
+                
+                if (supplierName.includes(searchTerm) || countryName.includes(searchTerm) || category.includes(searchTerm)) {
+                  row.style.display = '';
+                } else {
+                  row.style.display = 'none';
+                }
+              });
+            });
+          </script>
+          </body>
+          </html>
